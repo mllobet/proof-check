@@ -52,6 +52,6 @@ public class Parser
 		Character c = _line.charAt(0);
 		if (!Character.isLowerCase(c))
 			throw new IllegalLineException("`" + c + "' is not a valid token");
-		return new Token(Token.Type.VARIABLE, c);
+		return new Token(Token.Type.VARIABLE, c.toString());
 	}
 }
