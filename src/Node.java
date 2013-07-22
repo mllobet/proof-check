@@ -8,11 +8,9 @@ public class Node<T> {
     public List<Node<T>> children;
  
     public Node() {
-        super();
     }
 
     public Node(T data) {
-        this();
         setData(data);
     }
      
@@ -44,8 +42,8 @@ public class Node<T> {
     public void insertChildAt(int index, Node<T> child) throws IndexOutOfBoundsException {
         if (index == getNumberOfChildren()) {
             addChild(child);
-            return;
-        } else {
+        } 
+        else {
             children.get(index);
             children.add(index, child);
         }

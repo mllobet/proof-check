@@ -4,18 +4,17 @@ import java.util.List;
 
 public class GenericTree<T> {
  
-    private Node<T> _rootElement;
+    private Node<T> rootElement;
 
     public GenericTree() {
-        super();
     }
  
     public Node<T> getRootElement() {
-        return _rootElement;
+        return this.rootElement;
     }
  
     public void setRootElement(Node<T> rootElement) {
-    	_rootElement = rootElement;
+    	this.rootElement = rootElement;
     }
     
     public String toString() {
@@ -24,7 +23,7 @@ public class GenericTree<T> {
     
     public List<Node<T>> toList() {
         List<Node<T>> list = new ArrayList<Node<T>>();
-        cross(_rootElement, list);
+        cross(this.rootElement, list);
         return list;
     }
     

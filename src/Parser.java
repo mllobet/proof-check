@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 
 import Token.Type;
 
-
 public class Parser
 {
 	private InputSource _in;
