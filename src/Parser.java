@@ -3,9 +3,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import Token.Type;
-
-
 public class Parser
 {
 	private InputSource _in;
@@ -33,7 +30,7 @@ public class Parser
 		_tokens.put("~", Token.Type.UNARY_NOT_OPERATOR);
 	}
 	
-	public Token nextToken()
+	public Token nextToken() throws IllegalLineException
 	{
 		if (_line.length() == 0)
 			_line = _in.readLine();
@@ -52,7 +49,7 @@ public class Parser
 		}
 		Character c = _line.charAt(0);
 		if (!Character.isLowerCase(c))
-			throw new IllegalLineException("`" + c + "' is not a valid token");
+			throw new IllegalLineException("`" + c.toString() + "' is not a valid token");
 		return new Token(Token.Type.VARIABLE, c.toString());
 	}
 }
