@@ -1,4 +1,3 @@
-import Token;
 
 public class ProofTree extends BinaryTree<Token> {
 
