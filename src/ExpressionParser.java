@@ -3,19 +3,15 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Parser
+public class ExpressionParser
 {
-	private InputSource _in;
 	private String  	_line;
 	
 	private Map<String, Token.Type> _tokens;
 	
-	public Parser(InputSource source)
+	public ExpressionParser(String expr)
 	{
-		if (source == null)
-			throw new IllegalArgumentException("InputSource can't be null");
-		_in = source;
-		_line = _in.readLine();
+		_line = expr;
 		this.initTokens();
 	}
 	
@@ -32,8 +28,6 @@ public class Parser
 	
 	public Token nextToken() throws IllegalLineException
 	{
-		if (_line.length() == 0)
-			_line = _in.readLine();
 		if (_line.length() == 0)
 			return null;
 		Iterator<Entry<String, Token.Type>> it = _tokens.entrySet().iterator(); 
