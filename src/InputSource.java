@@ -1,4 +1,7 @@
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Queue;
 
 
 // A class that generates lines from the input.
@@ -41,6 +44,30 @@ public class InputSource {
     }
     
     public static void main (String [ ] args) {
+
+    	ArrayList<Token> arrayList = new ArrayList();
+    	
+    	arrayList.add(new Token(Token.Type.VARIABLE, "A"));
+    	arrayList.add(new Token(Token.Type.BIN_OR_OPERATOR, "|"));
+    	arrayList.add(new Token(Token.Type.VARIABLE, "B"));
+    	arrayList.add(new Token(Token.Type.BIN_OR_OPERATOR, "|"));
+    	arrayList.add(new Token(Token.Type.OPEN_PARENTHESIS, "("));
+    	arrayList.add(new Token(Token.Type.VARIABLE, "B"));
+    	arrayList.add(new Token(Token.Type.BIN_OR_OPERATOR, "|"));
+    	arrayList.add(new Token(Token.Type.VARIABLE, "A"));
+    	arrayList.add(new Token(Token.Type.CLOSE_PARENTHESIS, ")"));
+
+    	Queue<Token> queue = ProofTree.infixToPostfix(arrayList);
+    	ProofTree tree = ProofTree.buildTree(queue);
+    	
+    	tree.print();
+    	
+//    	for (Iterator<Token> iter = queue.iterator(); iter.hasNext(); )
+//    	{
+//    		System.out.print(iter.next().getValue());
+//    	}
+//		System.out.println();
+    	
     	InputSource in;
     	if (args.length == 0) {
     		in = new InputSource ( );
@@ -55,5 +82,7 @@ public class InputSource {
     		}
     		System.out.println (s);
     	}
+    	
+    	
     }
 }
