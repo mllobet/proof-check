@@ -1,9 +1,9 @@
 
-public class ProofNode extends Node<Expression> {
+public class ProofNode extends Node<Token> {
 
-	public ProofNode()
+	public ProofNode(Token token)
 	{
-		super();
+		super(token);
 	}
 	
 }
