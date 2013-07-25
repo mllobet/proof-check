@@ -45,7 +45,7 @@ public class InputSource {
     
     public static void main (String [ ] args) {
 
-    	ArrayList<Token> arrayList = new ArrayList();
+    	ArrayList<Token> arrayList = new ArrayList<Token>();
     	
     	arrayList.add(new Token(Token.Type.VARIABLE, "A"));
     	arrayList.add(new Token(Token.Type.BIN_OR_OPERATOR, "|"));

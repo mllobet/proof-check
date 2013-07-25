@@ -22,7 +22,7 @@ public class ExpressionParser
 		_tokens.put(")", Token.Type.CLOSE_PARENTHESIS);
 		_tokens.put("&", Token.Type.BIN_AND_OPERATOR);
 		_tokens.put("|", Token.Type.BIN_OR_OPERATOR);
-		_tokens.put("=>", Token.Type.EQUALS_OPERATOR);
+		_tokens.put("=>", Token.Type.IMPLICATION_OPERATOR);
 		_tokens.put("~", Token.Type.UNARY_NOT_OPERATOR);
 	}
 	
@@ -42,6 +42,7 @@ public class ExpressionParser
 			}
 		}
 		Character c = _line.charAt(0);
+		_line = _line.substring(1);
 		if (!Character.isLowerCase(c))
 			throw new IllegalLineException("`" + c.toString() + "' is not a valid token");
 		return new Token(Token.Type.VARIABLE, c.toString());

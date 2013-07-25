@@ -7,23 +7,24 @@ public abstract class Command
 	private LineNumber 		_lineNumber;
 	private List<String>	_arguments;
 	private Expression 		_expr;
+	private Expression		_inference;
 	
 	private List<Command>	_subcommands;
+	private Command			_parent;
 	
-	public Command(LineNumber lineNumber, Expression expr)
+	public Command(LineNumber lineNumber, Expression expr, Command parent)
 	{
 		_lineNumber  = lineNumber;
 		_expr 		 = expr;
+		_inference	 = null;
 		_subcommands = new ArrayList<Command>();
 		_arguments 	 = new ArrayList<String>();
+		_parent = parent;
 	}
 	
-	public Command(LineNumber lineNumber, Expression expr, String... arguments)
+	public Command(LineNumber lineNumber, Expression expr, Command parent, String... arguments)
 	{
-		_lineNumber  = lineNumber;
-		_expr 		 = expr;
-		_subcommands = new ArrayList<Command>();
-		_arguments 	 = new ArrayList<String>(); 
+		this(lineNumber, expr, parent);
 		for (String arg : arguments)
 			_arguments.add(arg);
 	}
@@ -51,6 +52,21 @@ public abstract class Command
 	public Expression getExpr()
 	{
 		return _expr;
+	}
+
+	public Command getParent()
+	{
+		return _parent;
+	}
+	
+	public Expression getInference()
+	{
+		return _inference;
+	}
+	
+	public void setInference(Expression expr)
+	{
+		_inference = expr;
 	}
 	
 	public abstract void execute();

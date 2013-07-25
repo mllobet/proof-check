@@ -9,7 +9,7 @@ public class Token
 		UNARY_NOT_OPERATOR,
 		BIN_AND_OPERATOR,
 		BIN_OR_OPERATOR,
-		EQUALS_OPERATOR,
+		IMPLICATION_OPERATOR,
 	}
 	
 	private Type _type;
