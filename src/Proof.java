@@ -4,6 +4,7 @@ public class Proof {
 	private TheoremSet theorems;
 	private ProofTree proofTree;
 	private Command lastCommand;
+	private LineNumber _nextLine;
 	
 	public Proof (TheoremSet theorems) {
 		_parser = new CommandParser();
@@ -11,11 +12,12 @@ public class Proof {
 	}
 
 	public LineNumber nextLineNumber ( ) {
-		return _parser.nextLineNumber();
+		_nextLine = _parser.nextLineNumber();
+		return _nextLine;
 	}
 
 	public void extendProof (String x) throws IllegalLineException, IllegalInferenceException {
-		lastCommand = _parser.parse(x, nextLineNumber());
+		lastCommand = _parser.parse(x, _nextLine);
 	}
 
 	public String toString ( ) {
