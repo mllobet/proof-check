@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Queue;
 
 
@@ -57,11 +56,16 @@ public class InputSource {
     	arrayList.add(new Token(Token.Type.VARIABLE, "A"));
     	arrayList.add(new Token(Token.Type.CLOSE_PARENTHESIS, ")"));
 
-    	Queue<Token> queue = ProofTree.infixToPostfix(arrayList);
-    	ProofTree tree = ProofTree.buildTree(queue);
-    	
-    	tree.print();
-    	
+    	try
+    	{
+    		ProofTree tree = ProofTree.buildTree(arrayList);
+        	tree.print();
+    	}
+    	catch (Exception e)
+    	{
+    		System.out.println(e);
+    	}
+    	    	
     	InputSource in;
     	if (args.length == 0) {
     		in = new InputSource ( );

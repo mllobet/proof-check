@@ -1,21 +1,21 @@
 
 public class Proof {
-	
-	private LineNumber nextLineNumber;
+	private CommandParser _parser;
 	private TheoremSet theorems;
 	private ProofTree proofTree;
-
+	private Command lastCommand;
+	
 	public Proof (TheoremSet theorems) {
-		nextLineNumber = new LineNumber("1");
+		_parser = new CommandParser();
 		this.theorems = theorems;
 	}
 
 	public LineNumber nextLineNumber ( ) {
-		return nextLineNumber;
+		return _parser.nextLineNumber();
 	}
 
 	public void extendProof (String x) throws IllegalLineException, IllegalInferenceException {
-		
+		lastCommand = _parser.parse(x, nextLineNumber());
 	}
 
 	public String toString ( ) {
@@ -23,6 +23,6 @@ public class Proof {
 	}
 
 	public boolean isComplete ( ) {
-		return false;
+		return _parser.currentCommand().isComplete() && _parser.currentCommand().getParent() == null;
 	}
 }

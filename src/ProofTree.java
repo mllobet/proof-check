@@ -4,8 +4,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-
 public class ProofTree extends BinaryTree<Token> {
+	
+	static final String kErrorVariable = "Multiple Variables following";
+	static final String kErrorOperator = "Operator exception";
+	static final String kErrorParenthesis = "Parenthesis Exception";
 		
 	public ProofTree() {
 		super();
@@ -15,10 +18,13 @@ public class ProofTree extends BinaryTree<Token> {
 		super(root);
 	}
 	
-	public static Queue<Token> infixToPostfix(ArrayList<Token> tokenArray) {
+	private static Queue<Token> infixToPostfix(ArrayList<Token> tokenArray) throws IllegalLineException {
 		
 		Stack<Token> operatorStack = new Stack<Token>();
 		Queue<Token> linkedList = new LinkedList<Token>();
+		
+		Stack<Token.Type> errorStack = new Stack<Token.Type>();
+		Stack<Token.Type> parenthesisStack = new Stack<Token.Type>();
 		
 		for (Iterator<Token> iter = tokenArray.iterator(); iter.hasNext();) 
 		{
@@ -26,14 +32,20 @@ public class ProofTree extends BinaryTree<Token> {
 		
 			if (token.getType() == Token.Type.OPEN_PARENTHESIS)
 			{
+				parenthesisStack.push(Token.Type.OPEN_PARENTHESIS);
 				operatorStack.push(token);
 			}
 			else if (token.getType() == Token.Type.CLOSE_PARENTHESIS)
 			{
+				if (parenthesisStack.empty() == true)
+					throw new IllegalLineException(kErrorParenthesis);
+				
+				Token.Type type = parenthesisStack.pop();
+				if (type != Token.Type.OPEN_PARENTHESIS)
+					throw new IllegalLineException(kErrorParenthesis);
+				
 				while (!operatorStack.isEmpty())
-				{
-					// Check for operatorStack empty => error no open_parenthesis
-					
+				{					
 					Token currentToken = operatorStack.pop();
 					if (currentToken.getType() == Token.Type.OPEN_PARENTHESIS)
 					{
@@ -46,12 +58,31 @@ public class ProofTree extends BinaryTree<Token> {
 			else if (token.getType() == Token.Type.VARIABLE)
 			{
 				linkedList.add(token);
+				
+				if (errorStack.empty() == false)
+				{
+					Token.Type lastType = errorStack.pop();
+					if (lastType == Token.Type.VARIABLE)
+						throw new IllegalLineException(kErrorVariable);
+				}
+
+				errorStack.push(Token.Type.VARIABLE);
 			}
 			else
 			{
 				// Check for operator priority
 				
 				operatorStack.push(token);
+				
+				if (errorStack.empty() == true)
+					throw new IllegalLineException(kErrorOperator);
+
+				Token.Type type = errorStack.pop();
+				
+				if (type != Token.Type.VARIABLE)
+					throw new IllegalLineException(kErrorOperator);
+					
+				errorStack.push(token.getType());
 			}
 		}
 		
@@ -61,11 +92,16 @@ public class ProofTree extends BinaryTree<Token> {
 			linkedList.add(token);
 		}
 		
+		if (parenthesisStack.empty() == false)
+			throw new IllegalLineException(kErrorParenthesis);
+		
 		return linkedList;
 	}
 	
-	public static ProofTree buildTree(Queue<Token> queue) {
+	public static ProofTree buildTree(ArrayList<Token> tokenArray) throws IllegalLineException {
 
+		Queue<Token> queue = infixToPostfix(tokenArray);
+		
 		Stack<ProofNode> treeNodeStack = new Stack<ProofNode>();
 		
 		for (Iterator<Token> iter = queue.iterator(); iter.hasNext();)

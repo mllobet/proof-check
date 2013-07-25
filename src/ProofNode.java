@@ -15,7 +15,7 @@ public class ProofNode extends Node<Token> {
 	}
 	
 	public String toString() {
-		return "Node : " + this.data.getValue();
+		return this.data.getValue();
 	}
 	
 }
