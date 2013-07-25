@@ -56,10 +56,16 @@ public class InputSource {
     	arrayList.add(new Token(Token.Type.VARIABLE, "A"));
     	arrayList.add(new Token(Token.Type.CLOSE_PARENTHESIS, ")"));
 
-    	ProofTree tree = ProofTree.buildTree(arrayList);
-    	
-    	tree.print();
-    	
+    	try
+    	{
+    		ProofTree tree = ProofTree.buildTree(arrayList);
+        	tree.print();
+    	}
+    	catch (Exception e)
+    	{
+    		System.out.println(e);
+    	}
+    	    	
     	InputSource in;
     	if (args.length == 0) {
     		in = new InputSource ( );
