@@ -92,9 +92,9 @@ public class CommandParser
 	{
 		Expression e = new Expression(line);
 		if (command.equals("show"))
-			return new ShowCommand(nb, e, _currentCmd);
+			return new ShowCommand(nb, e, _currentCmd == null ? null : _currentCmd.getParent());
 		else
-			return new AssumeCommand(nb, e, _currentCmd.getParent());
+			return new AssumeCommand(nb, e, _currentCmd);
 	}
 	
 	private Command parseOneArgCommand(String line, String command, LineNumber nb) throws IllegalLineException
