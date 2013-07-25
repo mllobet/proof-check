@@ -1,9 +1,15 @@
 
 public class Proof {
 	private CommandParser _parser;
+	private TheoremSet theorems;
+	private ProofTree proofTree;
 	
+	public LineNumber nextLineNumber ( ) {
+	}
+
 	public Proof (TheoremSet theorems) {
 		_parser = new CommandParser();
+		this.theorems = theorems;
 	}
 
 	public LineNumber nextLineNumber ( ) {
