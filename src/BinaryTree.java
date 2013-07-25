@@ -29,7 +29,7 @@ public class BinaryTree<T> {
 	private void printHelper(Node<T> root, int indent) {
 		if (root.left != null) 
 			printHelper(root.left, indent + 1);
-		println (root.data, indent);
+		println (root, indent);
 		if (root.right != null) 
 			printHelper(root.right, indent + 1);
 	}
