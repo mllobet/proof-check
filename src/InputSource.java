@@ -56,8 +56,7 @@ public class InputSource {
     	arrayList.add(new Token(Token.Type.VARIABLE, "A"));
     	arrayList.add(new Token(Token.Type.CLOSE_PARENTHESIS, ")"));
 
-    	Queue<Token> queue = ProofTree.infixToPostfix(arrayList);
-    	ProofTree tree = ProofTree.buildTree(queue);
+    	ProofTree tree = ProofTree.buildTree(arrayList);
     	
     	tree.print();
     	

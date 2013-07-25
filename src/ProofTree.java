@@ -15,7 +15,7 @@ public class ProofTree extends BinaryTree<Token> {
 		super(root);
 	}
 	
-	public static Queue<Token> infixToPostfix(ArrayList<Token> tokenArray) {
+	private static Queue<Token> infixToPostfix(ArrayList<Token> tokenArray) {
 		
 		Stack<Token> operatorStack = new Stack<Token>();
 		Queue<Token> linkedList = new LinkedList<Token>();
@@ -64,8 +64,10 @@ public class ProofTree extends BinaryTree<Token> {
 		return linkedList;
 	}
 	
-	public static ProofTree buildTree(Queue<Token> queue) {
+	public static ProofTree buildTree(ArrayList<Token> tokenArray) {
 
+		Queue<Token> queue = infixToPostfix(tokenArray);
+		
 		Stack<ProofNode> treeNodeStack = new Stack<ProofNode>();
 		
 		for (Iterator<Token> iter = queue.iterator(); iter.hasNext();)
