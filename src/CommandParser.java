@@ -39,8 +39,15 @@ public class CommandParser
 		LineNumber nb = new LineNumber(_currentCmd.getLineNumber());
 		if (_currentCmd.toString().equals("show") && nb.compare(new LineNumber(1)) != 0)
 		{
+			// branch
 			nb.add(1);
 			return nb;
+		}
+		if (_currentCmd.isComplete() && _currentCmd.getParent() != null)
+		{
+			// unbranching
+			_currentCmd = _currentCmd.getParent();
+			nb = new LineNumber(_currentCmd.getLineNumber());
 		}
 		int size = nb.number().size() - 1;
 		Integer currentValue = nb.number().get(size);
@@ -48,10 +55,16 @@ public class CommandParser
 		return nb;
 	}
 	
+	public Command currentCommand()
+	{
+		return _currentCmd;
+	}
+	
 	public List<Command> getCommandsTree()
 	{
 		return _commands;
 	}
+	
 	public Command getCurrentCommand()
 	{
 		return _currentCmd;
@@ -75,7 +88,7 @@ public class CommandParser
 		return line;
 	}
 	
-	private Command parseNoArgCommand(String line, String command, LineNumber nb)
+	private Command parseNoArgCommand(String line, String command, LineNumber nb) throws IllegalLineException
 	{
 		Expression e = new Expression(line);
 		if (command.equals("show"))

@@ -3,10 +3,8 @@ public class Proof {
 	private CommandParser _parser;
 	private TheoremSet theorems;
 	private ProofTree proofTree;
+	private Command lastCommand;
 	
-	public LineNumber nextLineNumber ( ) {
-	}
-
 	public Proof (TheoremSet theorems) {
 		_parser = new CommandParser();
 		this.theorems = theorems;
@@ -17,7 +15,7 @@ public class Proof {
 	}
 
 	public void extendProof (String x) throws IllegalLineException, IllegalInferenceException {
-		_parser.parse(x, nextLineNumber());
+		lastCommand = _parser.parse(x, nextLineNumber());
 	}
 
 	public String toString ( ) {
@@ -25,6 +23,6 @@ public class Proof {
 	}
 
 	public boolean isComplete ( ) {
-		return false;
+		return _parser.currentCommand().isComplete() && _parser.currentCommand().getParent() == null;
 	}
 }

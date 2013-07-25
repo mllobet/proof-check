@@ -18,6 +18,12 @@ public class ShowCommand extends Command
 	}
 	
 	@Override
+	public boolean isComplete()
+	{
+		return false;
+	}
+	
+	@Override
 	public String toString()
 	{
 		return "show";
