@@ -56,10 +56,16 @@ public class CommandParser
 		return "";
 	}
 	
+	/*
+	private boolean isAlphabetic (character c) 
+	{
+	}
+	*/
+	
 	private String parseCommand(String line)
 	{
 		for (int i = 0; i < line.length(); ++i)
-			if (!Character.isAlphabetic(line.charAt(i)))
+			if (!Character.isLetter(line.charAt(i)))
 				return line.substring(0, i);
 		return line;
 	}

@@ -16,6 +16,12 @@ public class Node<T> {
     	this();
         setData(data);
     }
+    
+    public Node(T data, Node<T> l, Node<T> r) {
+    	setData(data);
+    	left = l;
+    	right = r;
+    }
  
     public T getData() {
         return this.data;
