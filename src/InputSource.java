@@ -45,7 +45,7 @@ public class InputSource {
     
     public static void main (String [ ] args) {
 
-    	ArrayList<Token> arrayList = new ArrayList();
+    	ArrayList<Token> arrayList = new ArrayList<Token>();
     	
     	arrayList.add(new Token(Token.Type.VARIABLE, "A"));
     	arrayList.add(new Token(Token.Type.BIN_OR_OPERATOR, "|"));
@@ -61,12 +61,6 @@ public class InputSource {
     	ProofTree tree = ProofTree.buildTree(queue);
     	
     	tree.print();
-    	
-//    	for (Iterator<Token> iter = queue.iterator(); iter.hasNext(); )
-//    	{
-//    		System.out.print(iter.next().getValue());
-//    	}
-//		System.out.println();
     	
     	InputSource in;
     	if (args.length == 0) {
