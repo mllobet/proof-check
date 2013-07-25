@@ -7,6 +7,10 @@ import java.util.Stack;
 
 public class ProofTree extends BinaryTree<Token> {
 		
+	public ProofTree() {
+		super();
+	}
+	
 	public ProofTree(ProofNode root) {
 		super(root);
 	}
@@ -87,4 +91,5 @@ public class ProofTree extends BinaryTree<Token> {
 		return new ProofTree(treeNodeStack.pop());
 		
 	}
+
 }
