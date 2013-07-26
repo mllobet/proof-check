@@ -28,6 +28,8 @@ public class ProofTree extends BinaryTree<Token> {
 		Stack<Token.Type> errorStack = new Stack<Token.Type>();
 		Stack<Token.Type> parenthesisStack = new Stack<Token.Type>();
 		
+		Token oldToken = null;
+		
 		for (Iterator<Token> iter = tokenArray.iterator(); iter.hasNext();) 
 		{
 			Token token = iter.next();
@@ -72,6 +74,10 @@ public class ProofTree extends BinaryTree<Token> {
 			}
 			else if (token.getType() == Token.Type.UNARY_NOT_OPERATOR)
 			{
+				
+				if (oldToken != null && oldToken.getType() == Token.Type.VARIABLE)
+					throw new IllegalLineException(kErrorUnary);
+				
 				operatorStack.push(token);
 				
 			}
@@ -101,6 +107,8 @@ public class ProofTree extends BinaryTree<Token> {
 					
 				errorStack.push(token.getType());
 			}
+			
+			oldToken = token;
 		}
 		
 		while (!operatorStack.isEmpty())
