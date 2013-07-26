@@ -31,9 +31,4 @@ public class Token
 	{
 		return _value;
 	}
-	
-	public String toString ( ) 
-	{
-		return _value;
-	}
 }

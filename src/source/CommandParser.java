@@ -1,4 +1,5 @@
 package source;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -6,11 +7,15 @@ public class CommandParser
 {		
 	private List<Command> 	_commands;
 	private Command			_currentCmd;
+	private Command			_parent;
+	private LineNumber		_line;
 	
 	public CommandParser()
 	{
-		_commands = new ArrayList<Command>();
-		_currentCmd = null;
+		_commands			= new ArrayList<Command>();
+		_currentCmd			= null;
+		_parent				= null;
+		_line				= new LineNumber(1);
 	}
 	
 	public Command parse(String line, LineNumber lineNumber) throws IllegalLineException
@@ -30,30 +35,35 @@ public class CommandParser
 			throw new IllegalLineException("Line doesn't contain any recognized command");
 		_currentCmd = cmd;
 		insertCommand(_commands, cmd, lineNumber);
+		updateLine();
 		return _currentCmd;
 	}
 	
 	public LineNumber nextLineNumber()
 	{
-		if (_currentCmd == null)
-			return new LineNumber(1);
-		LineNumber nb = new LineNumber(_currentCmd.getLineNumber());
-		if (_currentCmd.toString().equals("show") && nb.compare(new LineNumber(1)) != 0)
+		return _line;
+	}
+	
+	private void updateLine()
+	{
+		_line = new LineNumber(_currentCmd.getLineNumber());
+		if (_currentCmd.toString().equals("show") && _line.compare(new LineNumber(1)) != 0)
 		{
-			// branch
-			nb.add(1);
-			return nb;
+			_parent = _currentCmd;
+			_line.add(1); // Branch
 		}
-		if (_currentCmd.isComplete() && _currentCmd.getParent() != null)
+		else
 		{
-			// unbranching
-			_currentCmd = _currentCmd.getParent();
-			nb = new LineNumber(_currentCmd.getLineNumber());
+			if (_currentCmd.isComplete() && _currentCmd.getParent() != null)
+			{
+				_parent = _parent.getParent();
+				_currentCmd = _currentCmd.getParent(); // Unbranch
+				_line = new LineNumber(_currentCmd.getLineNumber());
+			}
+			int size = _line.number().size() - 1;
+			Integer currentValue = _line.number().get(size);
+			_line.set(size, currentValue + 1);
 		}
-		int size = nb.number().size() - 1;
-		Integer currentValue = nb.number().get(size);
-		nb.set(size, currentValue + 1);
-		return nb;
 	}
 	
 	public Command currentCommand()
@@ -93,30 +103,37 @@ public class CommandParser
 	{
 		Expression e = new Expression(line);
 		if (command.equals("show"))
-			return new ShowCommand(nb, e, _currentCmd == null ? null : _currentCmd.getParent());
-		else
-			return new AssumeCommand(nb, e, _currentCmd);
+			return new ShowCommand(nb, e, _parent);
+		if (_currentCmd == null || _currentCmd.toString() != "show")
+			throw new IllegalLineException("Assume must be after a show statement");
+		return new AssumeCommand(nb, e, _parent);
 	}
 	
 	private Command parseOneArgCommand(String line, String command, LineNumber nb) throws IllegalLineException
 	{
 		LineNumber ln = parseLineNumber(line);
 		line = line.substring(ln.length());
-		skipSpaces(line);
+		line = skipSpaces(line);
 		Expression e = new Expression(line);
-		return new AssumeCommand(nb, e, _currentCmd.getParent(), ln.toString());
+		if (command.equals("ic"))
+			return new ICCommand(nb, e, _parent, ln.toString());
+		return new RepeatCommand(nb, e, _parent, ln.toString());
 	}
 	
 	private Command parseTwoArgsCommand(String line, String command, LineNumber nb) throws IllegalLineException
 	{
 		LineNumber ln1 = parseLineNumber(line);
 		line = line.substring(ln1.length());
-		skipSpaces(line);
+		line = skipSpaces(line);
 		LineNumber ln2 = parseLineNumber(line);
 		line = line.substring(ln2.length());
-		skipSpaces(line);
+		line = skipSpaces(line);
 		Expression e = new Expression(line);
-		return new AssumeCommand(nb, e, _currentCmd.getParent(), ln1.toString(), ln2.toString());
+		if (command.equals("mp"))
+			return new MPCommand(nb, e, _parent, ln1.toString(), ln2.toString());
+		else if (command.equals("mc"))
+			return new MPCommand(nb, e, _parent, ln1.toString(), ln2.toString());
+		return new COCommand(nb, e, _parent, ln1.toString(), ln2.toString());
 	}
 	
 	private LineNumber parseLineNumber(String line) throws IllegalLineException

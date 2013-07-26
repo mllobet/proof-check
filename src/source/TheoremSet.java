@@ -1,4 +1,5 @@
 package source;
+
 public class TheoremSet {
 
 	public TheoremSet ( ) {

@@ -15,7 +15,7 @@ public class ShowCommand extends Command
 	@Override
 	public void execute()
 	{
-		//Nothing to do?
+		
 	}
 	
 	@Override

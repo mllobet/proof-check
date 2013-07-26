@@ -1,4 +1,5 @@
 package source;
+
 import java.util.ArrayList;
 
 public class Expression
@@ -16,9 +17,10 @@ public class Expression
 				break;
 			tokens.add(token);
 		}
-	
+		
 		_tree = ProofTree.buildTree(tokens);
     	_tree.print();
+
 	}
 	
 	public ProofTree getTree()

@@ -15,17 +15,13 @@ public class AssumeCommand extends Command
 	@Override
 	public void execute()
 	{
-		setInference(getExpr());
-	}
-	
-	public void isOk() 
-	{
+		
 	}
 	
 	@Override
 	public boolean isComplete()
 	{
-		return true;
+		return false;
 	}
 	
 	@Override
