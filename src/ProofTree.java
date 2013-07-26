@@ -72,7 +72,6 @@ public class ProofTree extends BinaryTree<Token> {
 			}
 			else if (token.getType() == Token.Type.UNARY_NOT_OPERATOR)
 			{
-			
 				operatorStack.push(token);
 				
 			}
@@ -119,11 +118,6 @@ public class ProofTree extends BinaryTree<Token> {
 	public static ProofTree buildTree(ArrayList<Token> tokenArray) throws IllegalLineException {
 
 		Queue<Token> queue = infixToPostfix(tokenArray);
-		
-		for (Iterator<Token> iter = queue.iterator(); iter.hasNext();)
-		{
-			System.out.println(iter.next().getValue());
-		}
 		
 		Stack<ProofNode> treeNodeStack = new Stack<ProofNode>();
 		

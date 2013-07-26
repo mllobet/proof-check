@@ -19,6 +19,9 @@ public class ProofNode extends Node<Token> {
 	}
 	
 	public String toString() {
+		
+		if (this.unaryFlag == true)
+			return "~" + this.getData().getValue();
 		return this.getData().getValue();
 	}
 
