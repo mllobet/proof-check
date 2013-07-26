@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Queue;
 
 
@@ -60,6 +61,12 @@ public class InputSource {
     	{
     		ProofTree tree = ProofTree.buildTree(arrayList);
         	tree.print();
+        	
+//        	for (Iterator<Node<Token>> it = tree.iterator(); it.hasNext();)
+//        	{
+//        		Node<Token> node = it.next();
+//        		System.out.println(node);
+//        	}
     	}
     	catch (Exception e)
     	{
