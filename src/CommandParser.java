@@ -111,21 +111,27 @@ public class CommandParser
 	{
 		LineNumber ln = parseLineNumber(line);
 		line = line.substring(ln.length());
-		skipSpaces(line);
+		line = skipSpaces(line);
 		Expression e = new Expression(line);
-		return new AssumeCommand(nb, e, _parent, ln.toString());
+		if (command.equals("ic"))
+			return new ICCommand(nb, e, _parent, ln.toString());
+		return new RepeatCommand(nb, e, _parent, ln.toString())
 	}
 	
 	private Command parseTwoArgsCommand(String line, String command, LineNumber nb) throws IllegalLineException
 	{
 		LineNumber ln1 = parseLineNumber(line);
 		line = line.substring(ln1.length());
-		skipSpaces(line);
+		line = skipSpaces(line);
 		LineNumber ln2 = parseLineNumber(line);
 		line = line.substring(ln2.length());
-		skipSpaces(line);
+		line = skipSpaces(line);
 		Expression e = new Expression(line);
-		return new AssumeCommand(nb, e, _parent, ln1.toString(), ln2.toString());
+		if (command.equals("mp"))
+			return new MPCommand(nb, e, _parent, ln1.toString(), ln2.toString());
+		else if (command.equals("mc"))
+			return new MPCommand(nb, e, _parent, ln1.toString(), ln2.toString());
+		return new COCommand(nb, e, _parent, ln1.toString(), ln2.toString());
 	}
 	
 	private LineNumber parseLineNumber(String line) throws IllegalLineException
