@@ -10,6 +10,7 @@ public class ProofNode extends Node<Token> {
 	}
 	
 	public void linkTo(ProofNode leftNode, ProofNode rightNode) {
+		
 		this.setLeft(leftNode);
 		this.setRight(rightNode);
 	}

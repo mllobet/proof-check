@@ -6,7 +6,7 @@ import java.util.Stack;
 
 public class ProofTree extends BinaryTree<Token> {
 	
-	static final String kErrorVariable = "Multiple Variables following";
+	static final String kErrorVariable = "Variable exception";
 	static final String kErrorOperator = "Operator exception";
 	static final String kErrorParenthesis = "Parenthesis Exception";
 		

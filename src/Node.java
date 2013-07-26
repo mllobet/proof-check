@@ -54,7 +54,7 @@ public class Node<T> {
     
     public Node<T> getRight()
     {
-    	return this.left;
+    	return this.right;
     }
     
     public void setParent(Node<T> parent)
