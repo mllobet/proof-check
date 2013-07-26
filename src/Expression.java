@@ -18,6 +18,7 @@ public class Expression
 		
 		_tree = ProofTree.buildTree(tokens);
     	_tree.print();
+
 	}
 	
 	public ProofTree getTree()

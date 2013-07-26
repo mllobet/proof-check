@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Queue;
 
 
@@ -42,45 +43,5 @@ public class InputSource {
 		return line.toLowerCase ( ).trim ( );
     }
     
-    public static void main (String [ ] args) {
-
-    	ArrayList<Token> arrayList = new ArrayList<Token>();
-    	
-    	arrayList.add(new Token(Token.Type.VARIABLE, "A"));
-    	arrayList.add(new Token(Token.Type.BIN_OR_OPERATOR, "|"));
-    	arrayList.add(new Token(Token.Type.VARIABLE, "B"));
-    	arrayList.add(new Token(Token.Type.BIN_OR_OPERATOR, "|"));
-    	arrayList.add(new Token(Token.Type.OPEN_PARENTHESIS, "("));
-    	arrayList.add(new Token(Token.Type.VARIABLE, "B"));
-    	arrayList.add(new Token(Token.Type.BIN_OR_OPERATOR, "|"));
-    	arrayList.add(new Token(Token.Type.VARIABLE, "A"));
-    	arrayList.add(new Token(Token.Type.CLOSE_PARENTHESIS, ")"));
-
-    	try
-    	{
-    		ProofTree tree = ProofTree.buildTree(arrayList);
-        	tree.print();
-    	}
-    	catch (Exception e)
-    	{
-    		System.out.println(e);
-    	}
-    	    	
-    	InputSource in;
-    	if (args.length == 0) {
-    		in = new InputSource ( );
-    	} else {
-    		in = new InputSource (args[0]);
-    	}
-    	String s;
-    	while (true) {
-    		s = in.readLine ( );
-    		if (s == null) {
-    			System.exit (0);
-    		}
-    		System.out.println (s);
-    	}
-    	
-    	
-    }
+   
 }

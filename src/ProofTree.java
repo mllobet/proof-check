@@ -6,9 +6,11 @@ import java.util.Stack;
 
 public class ProofTree extends BinaryTree<Token> {
 	
-	static final String kErrorVariable = "Multiple Variables following";
+	static final String kErrorVariable = "Variable exception";
 	static final String kErrorOperator = "Operator exception";
 	static final String kErrorParenthesis = "Parenthesis Exception";
+	static final String kErrorUnary = "Unary Operator Exception";
+	static final String kErrorMissing = "Missing argument";
 		
 	public ProofTree() {
 		super();
@@ -68,9 +70,24 @@ public class ProofTree extends BinaryTree<Token> {
 
 				errorStack.push(Token.Type.VARIABLE);
 			}
+			else if (token.getType() == Token.Type.UNARY_NOT_OPERATOR)
+			{
+				operatorStack.push(token);
+				
+			}
 			else
 			{
-				// Check for operator priority
+				
+				if (operatorStack.empty() == false)
+				{
+					Token lastToken = operatorStack.lastElement();
+				
+					if (lastToken.getType() == Token.Type.UNARY_NOT_OPERATOR)
+					{
+						operatorStack.pop();
+						linkedList.add(lastToken);
+					}
+				}
 				
 				operatorStack.push(token);
 				
@@ -94,7 +111,7 @@ public class ProofTree extends BinaryTree<Token> {
 		
 		if (parenthesisStack.empty() == false)
 			throw new IllegalLineException(kErrorParenthesis);
-		
+				
 		return linkedList;
 	}
 	
@@ -112,9 +129,19 @@ public class ProofTree extends BinaryTree<Token> {
 			{
 				treeNodeStack.push(new ProofNode(token));
 			}
+			else if (token.getType() == Token.Type.UNARY_NOT_OPERATOR)
+			{
+				if (treeNodeStack.isEmpty() == true)
+					throw new IllegalLineException(kErrorUnary);
+				
+				treeNodeStack.lastElement().switchUnaryFlag();
+			}
 			else
 			{
 				ProofNode parentNode = new ProofNode(token);
+				
+				if (treeNodeStack.size() < 2)
+					throw new IllegalLineException(kErrorMissing);
 				
 				ProofNode rightNode = treeNodeStack.pop();
 				ProofNode leftNode = treeNodeStack.pop();

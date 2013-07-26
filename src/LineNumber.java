@@ -26,7 +26,8 @@ public class LineNumber
        for (_size = 0; _size < line.length(); ++_size)
     	   if (!Character.isDigit(line.charAt(_size)) && line.charAt(_size) != '.')
     		   break;
-       for (String nb : line.split("\\."))
+       String numbers = line.substring(0, _size);
+       for (String nb : numbers.split("\\."))
        {
     	   Integer currentNumber = Integer.parseInt(nb);
            _numbers.add(currentNumber);
