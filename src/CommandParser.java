@@ -102,8 +102,9 @@ public class CommandParser
 		Expression e = new Expression(line);
 		if (command.equals("show"))
 			return new ShowCommand(nb, e, _parent);
-		else
-			return new AssumeCommand(nb, e, _parent);
+		if (_currentCmd == null || _currentCmd.toString() != "show")
+			throw new IllegalLineException("Assume must be after a show statement");
+		return new AssumeCommand(nb, e, _parent);
 	}
 	
 	private Command parseOneArgCommand(String line, String command, LineNumber nb) throws IllegalLineException
