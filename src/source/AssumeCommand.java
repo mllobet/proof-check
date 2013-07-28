@@ -1,5 +1,7 @@
 package source;
 
+import java.util.List;
+
 public class AssumeCommand extends Command
 {
 	public AssumeCommand(LineNumber lineNumber, Expression expr, Command parent)
@@ -13,7 +15,7 @@ public class AssumeCommand extends Command
 	}
 
 	@Override
-	public void execute() throws IllegalLineException
+	public void execute(List<Command> commands) throws IllegalLineException
 	{
 		if(!isOk())
 			throw new IllegalLineException("Assume command has an incorrect syntaxis");
@@ -31,7 +33,7 @@ public class AssumeCommand extends Command
 		if(getParent() == null)
 			System.out.println("FUUUUU null parent");
 			
-		if(getExpr().getTree().equalsNoSign(getParent().getExpr().getTree())) {
+		if(getExpr().getTree().equalsOpositeSign(getParent().getExpr().getTree())) {
 			return true;
 		}
 		if(getParent().getExpr().isImplication()) {

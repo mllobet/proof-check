@@ -1,5 +1,7 @@
 package source;
 
+import java.util.List;
+
 public class ShowCommand extends Command
 {
 	public ShowCommand(LineNumber lineNumber, Expression expr, Command parent)
@@ -13,7 +15,7 @@ public class ShowCommand extends Command
 	}
 
 	@Override
-	public void execute()
+	public void execute(List<Command> commands)
 	{
 		setInference(getExpr());
 	}

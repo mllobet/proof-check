@@ -23,8 +23,7 @@ public class COCommand extends Command
 	@Override
 	public boolean isOk()
 	{
-		// TODO Auto-generated method stub
-		
+		return false;
 	}
 
 	@Override

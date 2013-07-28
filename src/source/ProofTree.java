@@ -192,7 +192,9 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 			return equalsHelper((ProofNode)n1.getRight(),(ProofNode)n2.getRight());
 		return false;
 	}
-
+	
+	/*
+	// equalsNoSign
 	public boolean equalsNoSign(Object o) {
 		if (o != null)
 			return equalsNoSign((ProofNode)((ProofTree)o).root);
@@ -218,7 +220,39 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 			return equalsHelper((ProofNode)n1.getRight(),(ProofNode)n2.getRight());
 		return false;
 	}
+	*/
+	
+	//equalsOpositeSign
+	public boolean equalsOpositeSign(ProofTree o) {
+		if (debug)
+			System.out.println("equalsOpositeSign ProofTree");
+		if (o != null)
+			return equalsOpositeSign((ProofNode)((ProofTree)o).root);
+		return false;
+	}
 
+	public boolean equalsOpositeSign(ProofNode n) {
+		if (debug)
+			System.out.println("equalsOpositeSign ProofNode");
+		if (n != null)
+			return equalsOpositeSignHelper((ProofNode)root, n);
+		if(debug)
+			System.out.println("equalsNoSign NULL");
+		return false;
+	}
+
+	public boolean equalsOpositeSignHelper(ProofNode n1, ProofNode n2) {
+		if (!n1.equalsOpositeSign(n2)) {
+			if(debug)
+				System.out.println(" it is not equal sign");
+			return false;
+		}
+		boolean same = equalsHelper((ProofNode)n1.getLeft(), (ProofNode)n2.getLeft());
+		if (same)
+			return equalsHelper((ProofNode)n1.getRight(),(ProofNode)n2.getRight());
+		return false;
+	}
+	
 	public boolean isEquivalent(Object o) throws MethodNotFoundException {
 		throw new MethodNotFoundException();
 	}

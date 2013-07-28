@@ -131,8 +131,8 @@ public class CommandParser
 		Expression e = new Expression(line);
 		if (command.equals("mp"))
 			return new MPCommand(nb, e, _parent, ln1.toString(), ln2.toString());
-		else if (command.equals("mc"))
-			return new MPCommand(nb, e, _parent, ln1.toString(), ln2.toString());
+		else if (command.equals("mt"))
+			return new MTCommand(nb, e, _parent, ln1.toString(), ln2.toString());
 		return new COCommand(nb, e, _parent, ln1.toString(), ln2.toString());
 	}
 	
@@ -172,6 +172,6 @@ public class CommandParser
 		Integer number = nb.number().get(nb.number().size() - 1) - 1;
 		if (number >= commands.size())
 			throw new IllegalLineException("Line: `" + nb.toString() + "' doesn't exist");
-		return commands.get(number - 1);
+		return commands.get(number);
 	}
 }

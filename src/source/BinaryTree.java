@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class BinaryTree<T> {
 	
-	protected final boolean debug = false;
+	protected final boolean debug = true;
 
 	public Node<T> root;
 

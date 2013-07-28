@@ -53,4 +53,9 @@ public class ProofNode extends Node<Token> {
 	{
 		return (this.getData().equals(((ProofNode)o).getData()));
 	}
+	
+	public boolean equalsOpositeSign(Object o)
+	{
+		return (this.getData().equals(((ProofNode)o).getData()) && this.isUnaryFlag() != ((ProofNode)o).isUnaryFlag());
+	}
 }

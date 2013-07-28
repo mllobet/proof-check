@@ -1,5 +1,8 @@
 package source;
 
+import java.util.List;
+
+// From expressions E1 and (E1=>E2) we can infer E2.
 public class MPCommand extends Command
 {
 
@@ -14,16 +17,21 @@ public class MPCommand extends Command
 	}
 
 	@Override
-	public void execute()
+	public void execute(List<Command> commands) throws IllegalLineException
 	{
-		// TODO Auto-generated method stub
-		
+		// E1 and (E1=>E2) we can infer E2.
+		if (commands.get(0).getInference().getTree().equals(commands.get(1).getInference().getTree().root.getLeft()) && getExpr().getTree().equals(commands.get(1).getInference().getTree().root.getRight()))
+			setInference(getExpr());
+		else if (commands.get(1).getInference().getTree().equals(commands.get(0).getInference().getTree().root.getLeft()) && getExpr().getTree().equals(commands.get(0).getInference().getTree().root.getRight()))
+			setInference(getExpr());
+		else 
+			throw new IllegalLineException("MP has invalid input");
 	}
-	
+
 	@Override
 	public boolean isOk()
 	{
-		
+		return true;
 	}
 
 	@Override
@@ -32,7 +40,7 @@ public class MPCommand extends Command
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	@Override
 	public String toString()
 	{

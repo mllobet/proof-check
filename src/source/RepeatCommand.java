@@ -1,5 +1,7 @@
 package source;
 
+import java.util.List;
+
 public class RepeatCommand extends Command
 {
 
@@ -14,15 +16,15 @@ public class RepeatCommand extends Command
 	}
 
 	@Override
-	public void execute()
+	public void execute(List<Command> commands)
 	{
-		// TODO Auto-generated method stub
+		setInference(commands.get(0).getExpr());
 	}
 	
 	@Override
-	public boolean isOK()
+	public boolean isOk()
 	{
-		
+		return true;
 	}
 
 	@Override

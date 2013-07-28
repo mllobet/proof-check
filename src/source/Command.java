@@ -76,7 +76,7 @@ public abstract class Command
 		_inference = expr;
 	}
 
-	public abstract void execute() throws IllegalLineException, IllegalInferenceException;
+	public abstract void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException;
 	public abstract boolean isOk();
 	public abstract boolean isComplete();
 }
