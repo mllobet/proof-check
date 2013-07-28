@@ -3,6 +3,8 @@ package source;
 import java.util.Iterator;
 
 public class BinaryTree<T> {
+	
+	protected final boolean debug = false;
 
 	public Node<T> root;
 

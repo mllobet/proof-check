@@ -31,7 +31,7 @@ public class CommandParser
 			cmd = this.parseOneArgCommand(line, command, lineNumber);
 		else if (command.equals("mp") || command.equals("mt") || command.equals("mc"))
 			cmd = this.parseTwoArgsCommand(line, command, lineNumber);
-		else
+		else //TODO: THEOREMS 
 			throw new IllegalLineException("Line doesn't contain any recognized command");
 		_currentCmd = cmd;
 		insertCommand(_commands, cmd, lineNumber);
@@ -149,7 +149,7 @@ public class CommandParser
 		{
 			Integer number = nb.number().get(i) - 1;
 			if (number > commands.size())
-				throw new IllegalLineException("Line: `" + commands.toString() + "' doesn't exist");
+				throw new IllegalLineException("Line: `" + nb.toString() + "' doesn't exist");
 			if (commands.get(number).subcommands() != null)
 				commands = commands.get(number).subcommands();
 		}
@@ -157,5 +157,21 @@ public class CommandParser
 		if (number < commands.size())
 			throw new IllegalLineException("Line already exists");
 		commands.add(cmd);
+	}
+	
+	public Command findNode(List<Command> commands, LineNumber nb) throws IllegalLineException
+	{
+		for (int i = 0; i < nb.number().size() - 1; ++i)
+		{
+			Integer number = nb.number().get(i) - 1;
+			if (number > commands.size())
+				throw new IllegalLineException("Line: `" + nb.toString() + "' doesn't exist");
+			if (commands.get(number).subcommands() != null)
+				commands = commands.get(number).subcommands();
+		}
+		Integer number = nb.number().get(nb.number().size() - 1) - 1;
+		if (number >= commands.size())
+			throw new IllegalLineException("Line: `" + nb.toString() + "' doesn't exist");
+		return commands.get(number - 1);
 	}
 }

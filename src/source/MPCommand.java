@@ -19,6 +19,12 @@ public class MPCommand extends Command
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public boolean isOk()
+	{
+		
+	}
 
 	@Override
 	public boolean isComplete()

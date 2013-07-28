@@ -1,5 +1,9 @@
 package source;
 
+import java.util.LinkedList;
+import java.util.List;
+
+
 public class Proof {
 	private CommandParser _parser;
 	private TheoremSet theorems;
@@ -7,9 +11,13 @@ public class Proof {
 	private Command lastCommand;
 	private LineNumber _nextLine;
 	
+	private List<Command> pastCommands;
+	
 	public Proof (TheoremSet theorems) {
 		_parser = new CommandParser();
 		this.theorems = theorems;
+		
+		pastCommands = new LinkedList<Command>();
 	}
 
 	public LineNumber nextLineNumber ( ) {
@@ -19,6 +27,11 @@ public class Proof {
 
 	public void extendProof (String x) throws IllegalLineException, IllegalInferenceException {
 		lastCommand = _parser.parse(x, _nextLine);
+		pastCommands.add(lastCommand);
+		
+		//after execute, try to set parent's inference
+		lastCommand.execute();
+		
 	}
 
 	public String toString ( ) {

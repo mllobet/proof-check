@@ -19,6 +19,12 @@ public class ICCommand extends Command
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public boolean isOK()
+	{
+		
+	}
 
 	@Override
 	public boolean isComplete()

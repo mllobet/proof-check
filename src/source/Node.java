@@ -76,4 +76,10 @@ public class Node<T> {
     	
     	return node;
     }
+    
+    public boolean equals(Object o) 
+    {
+    	System.out.println("Node equals");
+    	return (this.data.equals(((Node<T>)o).data));
+    }
 }

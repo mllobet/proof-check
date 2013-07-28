@@ -2,7 +2,10 @@ package source;
 
 public class Token
 {
-	public enum Type
+	
+	private final boolean debug = false;
+	
+	static public enum Type
 	{
 		VARIABLE,
 		OPEN_PARENTHESIS,
@@ -30,5 +33,22 @@ public class Token
 	public String getValue()
 	{
 		return _value;
+	}
+	
+	public String toString()
+	{
+		return _value + " " + _type;
+	}
+	
+	public boolean equals(Object o)
+	{
+		Token t = (Token)o;
+		if (debug) {
+			System.out.println("Comparing tokens: this: " + this + " that: " + t);
+			System.out.println("Evaluates to " + (t.getType().equals(this.getType()) && t.getValue().equals(this.getValue())));
+			System.out.println(t.getType());
+			System.out.println(this.getType());
+		}
+		return t.getType().equals(this.getType()) && t.getValue().equals(this.getValue());
 	}
 }

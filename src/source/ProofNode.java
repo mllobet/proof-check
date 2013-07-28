@@ -2,6 +2,8 @@ package source;
 
 public class ProofNode extends Node<Token> {
 
+	private final boolean debug = false;
+	
 	private boolean unaryFlag;
 	
 	public ProofNode(Token token) {
@@ -39,4 +41,16 @@ public class ProofNode extends Node<Token> {
 		this.unaryFlag = !this.unaryFlag;
 	}
 	
+	@Override 
+	public boolean equals(Object o)
+	{
+		if(debug)
+			System.out.println("ProofNode equals");
+		return (this.getData().equals(((ProofNode)o).getData()) && this.unaryFlag == ((ProofNode)o).unaryFlag);
+	}
+	
+	public boolean equalsNoSign(Object o)
+	{
+		return (this.getData().equals(((ProofNode)o).getData()));
+	}
 }

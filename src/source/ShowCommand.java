@@ -15,7 +15,13 @@ public class ShowCommand extends Command
 	@Override
 	public void execute()
 	{
-		
+		setInference(getExpr());
+	}
+	
+	@Override
+	public boolean isOk()
+	{
+		return true;
 	}
 	
 	@Override
