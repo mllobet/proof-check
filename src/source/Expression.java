@@ -22,6 +22,9 @@ public class Expression
 			tokens.add(token);
 		}
 
+		if (tokens.size() == 0)
+			throw new IllegalLineException("Expression doesn't contain any known token");
+		
 		_tree = ProofTree.buildTree(tokens);
 		_tree.print();
 

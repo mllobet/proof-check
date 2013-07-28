@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-import com.sun.tools.example.debug.bdi.MethodNotFoundException;
+//import com.sun.tools.example.debug.bdi.MethodNotFoundException;
 
 public class ProofTree extends BinaryTree<Token> {	protected final boolean debug = false;
 
@@ -253,8 +253,8 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 		return false;
 	}
 	
-	public boolean isEquivalent(Object o) throws MethodNotFoundException {
+/*	public boolean isEquivalent(Object o) throws MethodNotFoundException {
 		throw new MethodNotFoundException();
-	}
+	}*/
 
 }

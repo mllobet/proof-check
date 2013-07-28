@@ -10,9 +10,9 @@ public class ProofTreeTest {
 	ProofTree t1;
 	ProofTree t2;
 	
-	@Test
+/*	@Test
 	public void testEquals() {
 		t1 = new ProofTree
-	}
+	}*/
 
 }

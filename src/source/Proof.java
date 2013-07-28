@@ -31,7 +31,14 @@ public class Proof {
 
 		//after execute, check parent's inference
 		lastCommand.execute(getCommands(lastCommand.getArgs()));
-
+		try
+		{
+			_parser.updateLine(lastCommand, _nextLine);
+		}
+		catch (IllegalArgumentException e)
+		{
+			System.out.println(e.toString());
+		}
 	}
 
 	public String toString ( ) {
@@ -47,6 +54,9 @@ public class Proof {
 	}
 
 	public boolean isComplete ( ) {
+		Command c = _parser.currentCommand();
+		if (c == null)
+			return false;
 		return _parser.currentCommand().isComplete() && _parser.currentCommand().getParent() == null;
 	}
 }

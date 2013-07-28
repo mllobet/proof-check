@@ -75,6 +75,11 @@ public abstract class Command
 	{
 		_inference = expr;
 	}
+	
+	public void setParent(Command parent)
+	{
+		_parent = parent;
+	}
 
 	public abstract void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException;
 	public abstract boolean isOk();
