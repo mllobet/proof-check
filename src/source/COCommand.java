@@ -1,5 +1,7 @@
 package source;
 
+import java.util.List;
+
 public class COCommand extends Command
 {
 
@@ -14,16 +16,18 @@ public class COCommand extends Command
 	}
 
 	@Override
-	public void execute()
+	public void execute(List<Command> commands) throws IllegalLineException
 	{
-		// TODO Auto-generated method stub
-		
+		if (commands.get(0).getExpr().getTree().equalsOpositeSign(getExpr().getTree()))
+			setInference(getExpr());
+		else throw new IllegalLineException("Expression given does not match negate expr");
+
 	}
-	
+
 	@Override
 	public boolean isOk()
 	{
-		return false;
+		return true;
 	}
 
 	@Override
@@ -32,7 +36,7 @@ public class COCommand extends Command
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	@Override
 	public String toString()
 	{

@@ -1,5 +1,7 @@
 package source;
 
+import java.util.List;
+
 public class ICCommand extends Command
 {
 
@@ -14,16 +16,15 @@ public class ICCommand extends Command
 	}
 
 	@Override
-	public void execute()
+	public void execute(List<Command> commands) throws IllegalLineException
 	{
-		// TODO Auto-generated method stub
-		
+		setInference(new Expression("(" + commands.get(0).getExpr().toString() + "=>" + getExpr().toString() + ")"));
 	}
 	
 	@Override
-	public boolean isOK()
+	public boolean isOk()
 	{
-		
+		return true;
 	}
 
 	@Override

@@ -6,9 +6,12 @@ public class Expression
 {
 	private final boolean debug = false;
 	private ProofTree _tree;
+	private String _string;
 
 	public Expression(String s) throws IllegalLineException
 	{
+		_string = s;
+		
 		ArrayList<Token> tokens = new ArrayList<Token>();
 		ExpressionParser parser = new ExpressionParser(s);
 		while (true)
@@ -36,5 +39,10 @@ public class Expression
 	public ProofTree getTree()
 	{
 		return _tree;
+	}
+	
+	public String toString()
+	{
+		return _string;
 	}
 }
