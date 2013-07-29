@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+import source.Token.Type;
+
 //import com.sun.tools.example.debug.bdi.MethodNotFoundException;
 
 public class ProofTree extends BinaryTree<Token> {	protected final boolean debug = false;
@@ -15,6 +17,7 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 	static final String kErrorParenthesis = "Parenthesis Exception";
 	static final String kErrorUnary = "Unary Operator Exception";
 	static final String kErrorMissing = "Missing argument";
+	static final String kExpressionInvalid = "Expression Exception";
 
 	public ProofTree() {
 		super();
@@ -22,6 +25,19 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 
 	public ProofTree(ProofNode root) {
 		super(root);
+	}
+	
+	private static boolean isValidExpression(Stack<Token.Type> expressionStack)
+	{
+//		for (Iterator<Token.Type> iter = expressionStack.iterator(); iter.hasNext();)
+//		{
+//			System.out.println(iter.next());
+//		}
+		
+		if (expressionStack.size() != 3)
+			return false;
+		
+		return true;
 	}
 
 	private static Queue<Token> infixToPostfix(ArrayList<Token> tokenArray) throws IllegalLineException {
@@ -31,8 +47,10 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 
 		Stack<Token.Type> errorStack = new Stack<Token.Type>();
 		Stack<Token.Type> parenthesisStack = new Stack<Token.Type>();
+		Stack<Stack<Token.Type>> expressionStack = new Stack<Stack<Token.Type>>();
 
 		Token oldToken = null;
+		Stack<Token.Type> currentTokenExpressionStack = null;
 
 		for (Iterator<Token> iter = tokenArray.iterator(); iter.hasNext();) 
 		{
@@ -42,6 +60,10 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 			{
 				parenthesisStack.push(Token.Type.OPEN_PARENTHESIS);
 				operatorStack.push(token);
+				
+				Stack<Token.Type> tokenExpressionStack = new Stack<Token.Type>();
+				expressionStack.push(tokenExpressionStack);
+				currentTokenExpressionStack = tokenExpressionStack;
 			}
 			else if (token.getType() == Token.Type.CLOSE_PARENTHESIS)
 			{
@@ -62,6 +84,21 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 
 					linkedList.add(currentToken);
 				}
+				
+				if (isValidExpression(currentTokenExpressionStack))
+				{
+					expressionStack.pop();
+					if (expressionStack.empty())
+						currentTokenExpressionStack = null;
+					else
+					{
+						currentTokenExpressionStack = expressionStack.lastElement();
+						currentTokenExpressionStack.push(Token.Type.VARIABLE);
+					}
+				}
+				else
+					throw new IllegalLineException(kExpressionInvalid);
+				
 			}
 			else if (token.getType() == Token.Type.VARIABLE)
 			{
@@ -75,6 +112,12 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 				}
 
 				errorStack.push(Token.Type.VARIABLE);
+			
+				if (currentTokenExpressionStack == null)
+					throw new IllegalLineException(kErrorVariable);
+					
+				currentTokenExpressionStack.push(Token.Type.VARIABLE);
+				
 			}
 			else if (token.getType() == Token.Type.UNARY_NOT_OPERATOR)
 			{
@@ -110,6 +153,8 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 					throw new IllegalLineException(kErrorOperator);
 
 				errorStack.push(token.getType());
+				currentTokenExpressionStack.push(token.getType());
+
 			}
 
 			oldToken = token;
@@ -123,6 +168,12 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 
 		if (parenthesisStack.empty() == false)
 			throw new IllegalLineException(kErrorParenthesis);
+		
+		if (expressionStack.empty() == false)
+		{
+			if (!isValidExpression(currentTokenExpressionStack))
+				throw new IllegalLineException(kExpressionInvalid);
+		}
 
 		return linkedList;
 	}
