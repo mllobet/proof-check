@@ -1,6 +1,7 @@
 package source;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -50,7 +51,7 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 		Stack<Stack<Token.Type>> expressionStack = new Stack<Stack<Token.Type>>();
 
 		Token oldToken = null;
-		Stack<Token.Type> currentTokenExpressionStack = null;			
+		Stack<Token.Type> currentTokenExpressionStack = null;	
 		
 		for (Iterator<Token> iter = tokenArray.iterator(); iter.hasNext();) 
 		{
@@ -104,19 +105,20 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 			{
 				linkedList.add(token);
 
-				/*if (errorStack.empty() == false)
+				if (errorStack.empty() == false)
 				{
 					Token.Type lastType = errorStack.pop();
 					if (lastType == Token.Type.VARIABLE)
 						throw new IllegalLineException(kErrorVariable);
-				}*/
+				}
 
 				errorStack.push(Token.Type.VARIABLE);
 			
-				if (currentTokenExpressionStack == null)
-					currentTokenExpressionStack = new Stack<Token.Type>();
+				if (currentTokenExpressionStack == null && tokenArray.size() > 2)
+					throw new IllegalLineException(kExpressionInvalid);
 					
-				currentTokenExpressionStack.push(Token.Type.VARIABLE);
+				if (tokenArray.size() > 2)
+					currentTokenExpressionStack.push(Token.Type.VARIABLE);
 				
 			}
 			else if (token.getType() == Token.Type.UNARY_NOT_OPERATOR)
@@ -153,7 +155,8 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 					throw new IllegalLineException(kErrorOperator);
 
 				errorStack.push(token.getType());
-				currentTokenExpressionStack.push(token.getType());
+				if (currentTokenExpressionStack != null)
+					currentTokenExpressionStack.push(token.getType());
 
 			}
 
@@ -218,55 +221,35 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 
 	}
 	
-	private ArrayList<Token.Type> getExpressionOrder(ProofTree definitionTree, Queue<Type> definitionQueue)
-	{
-		ArrayList<Token.Type> linkedList = new ArrayList<Token.Type>();
-
-		for (Iterator<Node<Token>> iter = definitionTree.iterator(); iter.hasNext();)
-		{
-			Node<Token> node = iter.next();
-			Token.Type token = node.getData().getType();
-			
-			if (token != Token.Type.VARIABLE)
-				linkedList.add(token);
-			
-			definitionQueue.add(token);
-		}
-		
-		return linkedList;
-	}
-	
 	public boolean isEquivalent(ProofTree definitionTree)
-	{
-		Queue<Token.Type> definitionQueue = new LinkedList<Token.Type>();
-		Queue<Token.Type> useQueue = new LinkedList<Token.Type>();
-		
-		ArrayList<Token.Type> definitionOperatorQueue = getExpressionOrder(definitionTree, definitionQueue);
-		
-		int currentIndex = 0;
-		
-		for (Iterator<Node<Token>> iter = this.iterator(); iter.hasNext();)
+	{		
+		HashMap<String, Node<Token>> nodeHashMap = new HashMap<String, Node<Token>>();
+				
+		Iterator<Node<Token>> definitionIter = definitionTree.iterator();
+		for (Iterator<Node<Token>> iter = this.iterator(); iter.hasNext() && definitionIter.hasNext();)
 		{
 			Node<Token> node = iter.next();
-			Token.Type token = node.getData().getType();
+			Node<Token> definitionNode = definitionIter.next();
 			
-			if (token != Token.Type.VARIABLE)
+			if (definitionNode.getData().getType() == Token.Type.VARIABLE)
 			{
-				if (currentIndex >= definitionOperatorQueue.size())
-					return false;
-				
-				Token.Type definitionToken = definitionOperatorQueue.get(currentIndex);
-				if (definitionToken == token)
+				if (nodeHashMap.containsKey(definitionNode.getData().getValue()))
 				{
-					++currentIndex;
-					useQueue.add(token);
+					Node<Token> containNode = nodeHashMap.get(definitionNode.getData().getValue());
+					if (containNode.equals(node) == false)
+						return false;
 				}
 				else
-					useQueue.add(Token.Type.VARIABLE);
-			}	
+				{
+					if (nodeHashMap.containsValue(node))
+						return false;
+					
+					nodeHashMap.put(definitionNode.getData().getValue(), node);
+				}
+			}
 		}
 		
-		return definitionQueue.equals(useQueue);
+		return true;
 	}
 	
 	public boolean equals(ProofTree pt) {
