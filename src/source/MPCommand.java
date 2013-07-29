@@ -17,8 +17,11 @@ public class MPCommand extends Command
 	}
 
 	@Override
-	public void execute(List<Command> commands) throws IllegalLineException
+	public void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException
 	{
+		if (!(commands.get(0).getInference().isImplication() ^ commands.get(1).getInference().isImplication()))
+			throw new IllegalInferenceException("Two commands are implications or no comands are implications");
+		
 		// E1 and (E1=>E2) we can infer E2.
 		if (commands.get(0).getInference().getTree().equals(commands.get(1).getInference().getTree().root.getLeft()) && getExpr().getTree().equals(commands.get(1).getInference().getTree().root.getRight()))
 			setInference(getExpr());

@@ -16,9 +16,11 @@ public class RepeatCommand extends Command
 	}
 
 	@Override
-	public void execute(List<Command> commands)
+	public void execute(List<Command> commands) throws IllegalLineException
 	{
-		setInference(commands.get(0).getExpr());
+		if (commands.get(0).getInference() == null)
+			throw new IllegalLineException("Command to repeat has no inference");
+		setInference(commands.get(0).getInference());
 	}
 	
 	@Override

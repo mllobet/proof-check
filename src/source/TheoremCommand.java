@@ -29,7 +29,7 @@ public class TheoremCommand extends Command
 	public void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException {
 		if(getExpr().getTree().isEquivalent(_theoExp.getTree()))
 			setInference(getExpr());
-		else throw new IllegalLineException("Expression provided for theorem is not valid");
+		else throw new IllegalInferenceException("Expression provided for theorem is not valid");
 		
 	}
 
