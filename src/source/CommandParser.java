@@ -9,15 +9,17 @@ public class CommandParser
 	private Command			_currentCmd;
 	private Command			_parent;
 	private LineNumber		_line;
-	
-	public CommandParser()
+	private TheoremSet		_theorems;
+
+	public CommandParser(TheoremSet theorems)
 	{
 		_commands			= new ArrayList<Command>();
 		_currentCmd			= null;
 		_parent				= null;
 		_line				= new LineNumber(1);
+		_theorems			= theorems;
 	}
-	
+
 	public Command parse(String line, LineNumber lineNumber) throws IllegalLineException
 	{
 		line = skipSpaces(line);
@@ -36,13 +38,13 @@ public class CommandParser
 			cmd = this.parseOneArgCommand(line, command, lineNumber);
 		else if (command.equals("mp") || command.equals("mt") || command.equals("mc"))
 			cmd = this.parseTwoArgsCommand(line, command, lineNumber);
-		else //TODO: THEOREMS 
-			throw new IllegalLineException("Line doesn't contain any recognized command");
+		else
+			cmd = this.parseOneArgCommand(line, command, lineNumber);
 		if (cmd.getParent() == null)
 			cmd.setParent(_commands.size() != 0 ? _commands.get(0) : cmd);
 		return cmd;
 	}
-	
+
 	private void dumpTree(List<Command> _commands)
 	{
 		for (Command c : _commands)
@@ -54,14 +56,14 @@ public class CommandParser
 			if (c.subcommands() != null)
 				dumpTree(c.subcommands());
 		}
-		
+
 	}
 
 	public LineNumber nextLineNumber()
 	{
 		return _line;
 	}
-	
+
 	public void updateLine(Command cmd, LineNumber lineNumber) throws IllegalArgumentException
 	{
 		if (cmd.toString() == "dummy")
@@ -101,17 +103,17 @@ public class CommandParser
 	{
 		return _currentCmd;
 	}
-	
+
 	public List<Command> getCommandsTree()
 	{
 		return _commands;
 	}
-	
+
 	public Command getCurrentCommand()
 	{
 		return _currentCmd;
 	}
-	
+
 	private static String skipSpaces(String line)
 	{
 		for (int i = 0; i < line.length(); i++)
@@ -121,7 +123,7 @@ public class CommandParser
 		}
 		return "";
 	}
-	
+
 	private static String parseCommand(String line)
 	{
 		for (int i = 0; i < line.length(); ++i)
@@ -129,7 +131,7 @@ public class CommandParser
 				return line.substring(0, i);
 		return line;
 	}
-	
+
 	private Command parseNoArgCommand(String line, String command, LineNumber nb) throws IllegalLineException
 	{
 		Expression e = new Expression(line);
@@ -152,7 +154,18 @@ public class CommandParser
 			Expression e = new Expression(line);
 			return new ICCommand(nb, e, _parent, ln.toString());
 		}
-		return new RepeatCommand(nb, null, _parent, ln.toString());
+		else if (command.equals("repeat"))
+		{
+			return new RepeatCommand(nb, null, _parent, ln.toString());
+		}
+		else
+		{
+			Expression e = new Expression(line);
+			Expression theoExp = _theorems.get(command);
+			if(theoExp == null)
+				throw new IllegalLineException("Theorem " + command + " not found");
+			return new TheoremCommand(nb, theoExp, e, _parent);
+		}
 	}
 
 	private Command parseTwoArgsCommand(String line, String command, LineNumber nb) throws IllegalLineException
@@ -174,14 +187,14 @@ public class CommandParser
 			return new MTCommand(nb, e, _parent, ln1.toString(), ln2.toString());
 		return new COCommand(nb, e, _parent, ln1.toString(), ln2.toString());
 	}
-	
+
 	private LineNumber parseLineNumber(String line) throws IllegalLineException
 	{
 		if (line.length() == 0)
 			throw new IllegalLineException("Line doesn't contain any line number");
 		return new LineNumber(line);
 	}
-	
+
 	private boolean isScopeAllowed(LineNumber cmd, LineNumber target)
 	{
 		boolean isOk = true;
@@ -194,7 +207,7 @@ public class CommandParser
 		}
 		return true;
 	}
-	
+
 	private void insertCommand(List<Command> commands, Command cmd, LineNumber nb) throws IllegalLineException
 	{
 		for (int i = 0; i < nb.number().size() - 1; ++i)
@@ -210,7 +223,7 @@ public class CommandParser
 			throw new IllegalLineException("Line already exists");
 		commands.add(cmd);
 	}
-	
+
 	public Command findNode(List<Command> commands, LineNumber nb) throws IllegalLineException
 	{
 		for (int i = 0; i < nb.number().size() - 1; ++i)

@@ -14,7 +14,7 @@ public class Proof {
 	private LinkedList<Command> pastCommands;
 
 	public Proof (TheoremSet theorems) {
-		_parser = new CommandParser();
+		_parser = new CommandParser(theorems);
 		this.theorems = theorems;
 
 		pastCommands = new LinkedList<Command>();
