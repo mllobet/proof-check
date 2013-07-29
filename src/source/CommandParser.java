@@ -39,7 +39,7 @@ public class CommandParser
 		else //TODO: THEOREMS 
 			throw new IllegalLineException("Line doesn't contain any recognized command");
 		if (cmd.getParent() == null)
-			cmd.setParent(cmd);
+			cmd.setParent(_commands.size() != 0 ? _commands.get(0) : cmd);
 		return cmd;
 	}
 	
@@ -96,7 +96,7 @@ public class CommandParser
 			_line.set(size, currentValue + 1);
 		}
 	}
-	
+
 	public Command currentCommand()
 	{
 		return _currentCmd;
@@ -139,7 +139,7 @@ public class CommandParser
 			throw new IllegalLineException("Assume must be after a show statement");
 		return new AssumeCommand(nb, e, _parent);
 	}
-	
+
 	private Command parseOneArgCommand(String line, String command, LineNumber nb) throws IllegalLineException
 	{
 		LineNumber ln = parseLineNumber(line);
@@ -152,7 +152,7 @@ public class CommandParser
 			return new ICCommand(nb, e, _parent, ln.toString());
 		return new RepeatCommand(nb, e, _parent, ln.toString());
 	}
-	
+
 	private Command parseTwoArgsCommand(String line, String command, LineNumber nb) throws IllegalLineException
 	{
 		LineNumber ln1 = parseLineNumber(line);
