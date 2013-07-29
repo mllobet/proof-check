@@ -236,7 +236,7 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 		return linkedList;
 	}
 	
-	public boolean equivalent(ProofTree definitionTree)
+	public boolean isEquivalent(ProofTree definitionTree)
 	{
 		Queue<Token.Type> definitionQueue = new LinkedList<Token.Type>();
 		Queue<Token.Type> useQueue = new LinkedList<Token.Type>();
