@@ -50,8 +50,8 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 		Stack<Stack<Token.Type>> expressionStack = new Stack<Stack<Token.Type>>();
 
 		Token oldToken = null;
-		Stack<Token.Type> currentTokenExpressionStack = null;
-
+		Stack<Token.Type> currentTokenExpressionStack = null;			
+		
 		for (Iterator<Token> iter = tokenArray.iterator(); iter.hasNext();) 
 		{
 			Token token = iter.next();
