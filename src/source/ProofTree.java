@@ -104,17 +104,17 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 			{
 				linkedList.add(token);
 
-				if (errorStack.empty() == false)
+				/*if (errorStack.empty() == false)
 				{
 					Token.Type lastType = errorStack.pop();
 					if (lastType == Token.Type.VARIABLE)
 						throw new IllegalLineException(kErrorVariable);
-				}
+				}*/
 
 				errorStack.push(Token.Type.VARIABLE);
 			
 				if (currentTokenExpressionStack == null)
-					throw new IllegalLineException(kErrorVariable);
+					currentTokenExpressionStack = new Stack<Token.Type>();
 					
 				currentTokenExpressionStack.push(Token.Type.VARIABLE);
 				

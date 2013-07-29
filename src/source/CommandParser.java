@@ -39,7 +39,7 @@ public class CommandParser
 		else if (command.equals("mp") || command.equals("mt") || command.equals("mc"))
 			cmd = this.parseTwoArgsCommand(line, command, lineNumber);
 		else
-			cmd = this.parseOneArgCommand(line, command, lineNumber);
+			cmd = this.parseNoArgCommand(line, command, lineNumber);
 		if (cmd.getParent() == null)
 			cmd.setParent(_commands.size() != 0 ? _commands.get(0) : cmd);
 		return cmd;
@@ -127,7 +127,7 @@ public class CommandParser
 	private static String parseCommand(String line)
 	{
 		for (int i = 0; i < line.length(); ++i)
-			if (!Character.isLetter(line.charAt(i)))
+			if (!Character.isLetterOrDigit(line.charAt(i)))
 				return line.substring(0, i);
 		return line;
 	}
@@ -137,9 +137,20 @@ public class CommandParser
 		Expression e = new Expression(line);
 		if (command.equals("show"))
 			return new ShowCommand(nb, e, _parent);
-		if (_currentCmd == null || _currentCmd.toString() != "show")
-			throw new IllegalLineException("Assume must be after a show statement");
-		return new AssumeCommand(nb, e, _parent);
+		else if (command.equals("assume"))
+		{
+			if (_currentCmd == null || _currentCmd.toString().equals("assume"))
+				throw new IllegalLineException("Assume must be after a show statement"); 
+			return new AssumeCommand(nb, e, _parent);
+		}
+		else
+		{
+			Expression theoExp = _theorems.get(command);
+			if(theoExp == null)
+				throw new IllegalLineException("Theorem " + command + " not found");
+			return new TheoremCommand(nb, theoExp, e, _parent);
+		}
+			
 	}
 
 	private Command parseOneArgCommand(String line, String command, LineNumber nb) throws IllegalLineException
@@ -158,14 +169,7 @@ public class CommandParser
 		{
 			return new RepeatCommand(nb, null, _parent, ln.toString());
 		}
-		else
-		{
-			Expression e = new Expression(line);
-			Expression theoExp = _theorems.get(command);
-			if(theoExp == null)
-				throw new IllegalLineException("Theorem " + command + " not found");
-			return new TheoremCommand(nb, theoExp, e, _parent);
-		}
+		else throw new IllegalLineException("One argument command is invalid");
 	}
 
 	private Command parseTwoArgsCommand(String line, String command, LineNumber nb) throws IllegalLineException

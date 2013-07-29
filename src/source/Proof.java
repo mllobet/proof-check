@@ -45,17 +45,17 @@ public class Proof {
 		}
 		if (!exception) 
 		{
-			System.out.println("Checking out");
-			if (lastCommand.getInference() != null) System.out.println("LasCommand inference " + lastCommand.getInference());
-			if (lastCommand.getParent().getExpr() != null) System.out.println("Parent expression " + lastCommand.getParent().getExpr());
+			//System.out.println("Checking out");
+			//if (lastCommand.getInference() != null) System.out.println("LasCommand inference " + lastCommand.getInference());
+			//if (lastCommand.getParent().getExpr() != null) System.out.println("Parent expression " + lastCommand.getParent().getExpr());
 			if (lastCommand.getInference() != null) {
-				System.out.println("Parents");
-				lastCommand.getInference().getTree().print();
-				lastCommand.getParent().getExpr().getTree().print();
+				//System.out.println("Parents");
+				//lastCommand.getInference().getTree().print();
+				//lastCommand.getParent().getExpr().getTree().print();
 
 				if (lastCommand.getInference().getTree().equals((ProofNode)lastCommand.getParent().getExpr().getTree().root))
 				{
-					System.out.println("Is out");
+					//System.out.println("Is out");
 					lastCommand.getParent().setInference(lastCommand.getParent().getExpr());
 					lastCommand.complete();
 				}
