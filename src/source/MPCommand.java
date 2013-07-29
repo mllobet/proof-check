@@ -35,13 +35,6 @@ public class MPCommand extends Command
 	}
 
 	@Override
-	public boolean isComplete()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public String toString()
 	{
 		return "mp";

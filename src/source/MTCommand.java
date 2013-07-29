@@ -47,13 +47,6 @@ public class MTCommand extends Command
 	}
 
 	@Override
-	public boolean isComplete()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
 	public String toString()
 	{
 		return "mc";

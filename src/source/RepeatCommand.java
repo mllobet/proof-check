@@ -26,13 +26,6 @@ public class RepeatCommand extends Command
 	{
 		return true;
 	}
-
-	@Override
-	public boolean isComplete()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	@Override
 	public String toString()

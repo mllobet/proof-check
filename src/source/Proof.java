@@ -11,7 +11,7 @@ public class Proof {
 	private Command lastCommand;
 	private LineNumber _nextLine;
 
-	private List<Command> pastCommands;
+	private LinkedList<Command> pastCommands;
 
 	public Proof (TheoremSet theorems) {
 		_parser = new CommandParser();
@@ -29,16 +29,39 @@ public class Proof {
 		lastCommand = _parser.parse(x, _nextLine);
 		pastCommands.add(lastCommand);
 
+		boolean exception = false;
+
 		//after execute, check parent's inference
-		lastCommand.execute(getCommands(lastCommand.getArgs()));
 		try
 		{
+			lastCommand.execute(getCommands(lastCommand.getArgs()));
 			_parser.updateLine(lastCommand, _nextLine);
 		}
 		catch (IllegalArgumentException e)
 		{
 			System.out.println(e.toString());
+			pastCommands.removeLast();
+			exception = true;
 		}
+		if (!exception) 
+		{
+			System.out.println("Checking out");
+			if (lastCommand.getInference() != null) System.out.println("LasCommand inference " + lastCommand.getInference());
+			if (lastCommand.getParent().getExpr() != null) System.out.println("Parent expression " + lastCommand.getParent().getExpr());
+			if (lastCommand.getInference() != null) {
+				System.out.println("Parents");
+				lastCommand.getInference().getTree().print();
+				lastCommand.getParent().getExpr().getTree().print();
+
+				if (lastCommand.getInference().getTree().equals((ProofNode)lastCommand.getParent().getExpr().getTree().root))
+				{
+					System.out.println("Is out");
+					lastCommand.getParent().setInference(lastCommand.getParent().getExpr());
+					lastCommand.complete();
+				}
+			}
+		}
+
 	}
 
 	public String toString ( ) {
