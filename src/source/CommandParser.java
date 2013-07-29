@@ -127,7 +127,7 @@ public class CommandParser
 	private static String parseCommand(String line)
 	{
 		for (int i = 0; i < line.length(); ++i)
-			if (!Character.isLetter(line.charAt(i)))
+			if (!Character.isLetterOrDigit(line.charAt(i)))
 				return line.substring(0, i);
 		return line;
 	}
