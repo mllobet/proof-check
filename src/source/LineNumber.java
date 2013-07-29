@@ -21,7 +21,7 @@ public class LineNumber
 			_numbers.add(number);
 	}
 	
-	public LineNumber(String line)
+	public LineNumber(String line) throws IllegalLineException
 	{
        _numbers = new ArrayList<Integer>();
 	   int _size;
@@ -31,9 +31,15 @@ public class LineNumber
        String numbers = line.substring(0, _size);
        for (String nb : numbers.split("\\."))
        {
+    	   if (nb.length() == 0)
+    		   continue;
+    	   if (nb.endsWith("."))
+    		   nb = nb.substring(0, nb.length() - 1);
     	   Integer currentNumber = Integer.parseInt(nb);
            _numbers.add(currentNumber);
        }
+       if (_numbers.size() == 0)
+    	   throw new IllegalLineException("Line contains invalid line number");
 	}
 	
 	public List<Integer> number()
