@@ -53,7 +53,7 @@ public class ProofChecker {
             System.err.println ("too many arguments");
             System.exit (1);
         }
-        ProofChecker checker = new ProofChecker (args);
+        ProofChecker checker = new ProofChecker(args);
         Proof soFar = new Proof (checker.myTheorems);
             
         boolean done = false;
