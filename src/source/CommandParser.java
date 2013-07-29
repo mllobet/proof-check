@@ -39,7 +39,7 @@ public class CommandParser
 		else if (command.equals("mp") || command.equals("mt") || command.equals("mc"))
 			cmd = this.parseTwoArgsCommand(line, command, lineNumber);
 		else
-			cmd = this.parseOneArgCommand(line, command, lineNumber);
+			cmd = this.parseNoArgCommand(line, command, lineNumber);
 		if (cmd.getParent() == null)
 			cmd.setParent(_commands.size() != 0 ? _commands.get(0) : cmd);
 		return cmd;
