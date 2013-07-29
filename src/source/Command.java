@@ -12,6 +12,7 @@ public abstract class Command
 	private List<String>	_arguments;
 	private Expression 		_expr;
 	private Expression		_inference;
+	private boolean			_complete;
 
 	private List<Command>	_subcommands;
 	private Command			_parent;
@@ -27,6 +28,7 @@ public abstract class Command
 		_subcommands = new ArrayList<Command>();
 		_arguments 	 = new ArrayList<String>();
 		_parent = parent;
+		_complete = false;
 	}
 
 	public Command(LineNumber lineNumber, Expression expr, Command parent, String... arguments)
@@ -34,6 +36,7 @@ public abstract class Command
 		this(lineNumber, expr, parent);
 		for (String arg : arguments)
 			_arguments.add(arg);
+		_complete = false;
 	}
 
 	public void addSubcommand(Command cmd)
@@ -80,8 +83,17 @@ public abstract class Command
 	{
 		_parent = parent;
 	}
+	
+	public void complete()
+	{
+		_complete = true;
+	}
+	
+	public boolean isComplete()
+	{
+		return _complete;
+	}
 
 	public abstract void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException;
 	public abstract boolean isOk();
-	public abstract boolean isComplete();
 }

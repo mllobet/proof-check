@@ -5,9 +5,12 @@ import java.util.List;
 public class TheoremCommand extends Command
 {
 
-	public TheoremCommand(LineNumber lineNumber, Expression expr, Command parent)
+	private Expression _theoExp;
+
+	public TheoremCommand(LineNumber lineNumber, Expression theoExp, Expression expr, Command parent)
 	{
 		super(lineNumber, expr, parent);
+		_theoExp = theoExp;
 	}
 
 	public TheoremCommand(LineNumber lineNumber, Expression expr, Command parent, String... args)
@@ -15,12 +18,6 @@ public class TheoremCommand extends Command
 		super(lineNumber, expr, parent, args);
 	}
 
-	@Override
-	public boolean isComplete()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	@Override
 	public String toString()
@@ -29,9 +26,10 @@ public class TheoremCommand extends Command
 	}
 
 	@Override
-	public void execute(List<Command> commands) throws IllegalLineException,
-			IllegalInferenceException {
-		// TODO Auto-generated method stub
+	public void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException {
+		if(getExpr().getTree().isEquivalent(_theoExp.getTree()))
+			setInference(getExpr());
+		else throw new IllegalLineException("Expression provided for theorem is not valid");
 		
 	}
 
