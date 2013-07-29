@@ -206,6 +206,8 @@ public class CommandParser
 		{
 			int lhs = cmd.number().get(i);
 			int rhs = target.number().get(i);
+			if (rhs <= 0)
+				return false;
 			if (rhs > lhs)
 				return false;
 		}
@@ -233,13 +235,13 @@ public class CommandParser
 		for (int i = 0; i < nb.number().size() - 1; ++i)
 		{
 			Integer number = nb.number().get(i) - 1;
-			if (number > commands.size())
+			if (number > commands.size() || number <= 0)
 				throw new IllegalLineException("Line: `" + nb.toString() + "' doesn't exist");
 			if (commands.get(number).subcommands() != null)
 				commands = commands.get(number).subcommands();
 		}
 		Integer number = nb.number().get(nb.number().size() - 1) - 1;
-		if (number >= commands.size())
+		if (number >= commands.size() || number <= 0)
 			throw new IllegalLineException("Line: `" + nb.toString() + "' doesn't exist");
 		return commands.get(number);
 	}
