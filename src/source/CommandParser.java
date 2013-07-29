@@ -137,10 +137,12 @@ public class CommandParser
 		Expression e = new Expression(line);
 		if (command.equals("show"))
 			return new ShowCommand(nb, e, _parent);
-		if (_currentCmd == null || _currentCmd.toString().equals("assume"))
-			throw new IllegalLineException("Assume must be after a show statement");
-		else if (command.equals("assume")) 
-				return new AssumeCommand(nb, e, _parent);
+		else if (command.equals("assume"))
+		{
+			if (_currentCmd == null || _currentCmd.toString().equals("assume"))
+				throw new IllegalLineException("Assume must be after a show statement"); 
+			return new AssumeCommand(nb, e, _parent);
+		}
 		else
 		{
 			Expression theoExp = _theorems.get(command);
