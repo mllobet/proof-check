@@ -147,10 +147,12 @@ public class CommandParser
 		line = skipSpaces(line);
 		if (!isScopeAllowed(nb, ln))
 			throw new IllegalLineException("Scope error (can't access line `" + ln.toString() + "' from line `"+ nb.toString() +"')");
-		Expression e = new Expression(line);
 		if (command.equals("ic"))
+		{
+			Expression e = new Expression(line);
 			return new ICCommand(nb, e, _parent, ln.toString());
-		return new RepeatCommand(nb, e, _parent, ln.toString());
+		}
+		return new RepeatCommand(nb, null, _parent, ln.toString());
 	}
 
 	private Command parseTwoArgsCommand(String line, String command, LineNumber nb) throws IllegalLineException
