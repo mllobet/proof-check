@@ -217,7 +217,58 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 		return new ProofTree(treeNodeStack.pop());
 
 	}
+	
+	private ArrayList<Token.Type> getExpressionOrder(ProofTree definitionTree, Queue<Type> definitionQueue)
+	{
+		ArrayList<Token.Type> linkedList = new ArrayList<Token.Type>();
 
+		for (Iterator<Node<Token>> iter = definitionTree.iterator(); iter.hasNext();)
+		{
+			Node<Token> node = iter.next();
+			Token.Type token = node.getData().getType();
+			
+			if (token != Token.Type.VARIABLE)
+				linkedList.add(token);
+			
+			definitionQueue.add(token);
+		}
+		
+		return linkedList;
+	}
+	
+	public boolean equivalent(ProofTree definitionTree)
+	{
+		Queue<Token.Type> definitionQueue = new LinkedList<Token.Type>();
+		Queue<Token.Type> useQueue = new LinkedList<Token.Type>();
+		
+		ArrayList<Token.Type> definitionOperatorQueue = getExpressionOrder(definitionTree, definitionQueue);
+		
+		int currentIndex = 0;
+		
+		for (Iterator<Node<Token>> iter = this.iterator(); iter.hasNext();)
+		{
+			Node<Token> node = iter.next();
+			Token.Type token = node.getData().getType();
+			
+			if (token != Token.Type.VARIABLE)
+			{
+				if (currentIndex >= definitionOperatorQueue.size())
+					return false;
+				
+				Token.Type definitionToken = definitionOperatorQueue.get(currentIndex);
+				if (definitionToken == token)
+				{
+					++currentIndex;
+					useQueue.add(token);
+				}
+				else
+					useQueue.add(Token.Type.VARIABLE);
+			}	
+		}
+		
+		return definitionQueue.equals(useQueue);
+	}
+	
 	public boolean equals(ProofTree pt) {
 		if (pt != null) {
 			return equals (pt.root);
