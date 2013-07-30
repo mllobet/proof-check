@@ -6,7 +6,7 @@ import java.util.List;
 
 public abstract class Command
 {
-	protected static boolean debug = false;
+	protected static boolean debug = true;
 
 	private LineNumber 		_lineNumber;
 	private List<String>	_arguments;
