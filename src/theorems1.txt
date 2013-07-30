@@ -1,1 +1,2 @@
 and ((x&y)=>x)
+wand (a&b)

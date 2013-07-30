@@ -28,9 +28,6 @@ public class TheoremCommand extends Command
 	@Override
 	public void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException {
 		if(getExpr().getTree().isEquivalent(_theoExp.getTree())) {
-			System.out.println("They are equivalent!");
-			getExpr().getTree().print();
-			_theoExp.getTree().print();
 			setInference(getExpr());
 		}
 		else throw new IllegalInferenceException("Expression provided for theorem is not valid");
