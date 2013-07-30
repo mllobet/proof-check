@@ -13,12 +13,12 @@ import source.Token.Type;
 
 public class ProofTree extends BinaryTree<Token> {	protected final boolean debug = false;
 
-	static final String kErrorVariable = "Variable exception";
-	static final String kErrorOperator = "Operator exception";
-	static final String kErrorParenthesis = "Parenthesis Exception";
-	static final String kErrorUnary = "Unary Operator Exception";
-	static final String kErrorMissing = "Missing argument";
-	static final String kExpressionInvalid = "Expression Exception";
+	static final String kErrorVariable = "Missing Variable";
+	static final String kErrorOperator = "Invalid Operator";
+	static final String kErrorParenthesis = "Missing Parenthesis";
+	static final String kErrorUnary = "Unary Operator need to be front of a variable or an expression";
+	static final String kErrorMissing = "Missing Argument";
+	static final String kExpressionInvalid = "Invalid Expression";
 
 	public ProofTree() {
 		super();
