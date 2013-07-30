@@ -36,7 +36,7 @@ public class CommandParser
 		}
 		else if (command.equals("ic") || command.equals("repeat"))
 			cmd = this.parseOneArgCommand(line, command, lineNumber);
-		else if (command.equals("mp") || command.equals("mt") || command.equals("mc"))
+		else if (command.equals("mp") || command.equals("mt") || command.equals("co"))
 			cmd = this.parseTwoArgsCommand(line, command, lineNumber);
 		else
 			cmd = this.parseNoArgCommand(line, command, lineNumber);
