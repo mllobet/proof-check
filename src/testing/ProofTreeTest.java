@@ -39,5 +39,23 @@ public class ProofTreeTest {
 		
 	}
 
+	@Test
+	public void testEquals() throws IllegalLineException
+	{
+		Expression a = new Expression("((x&y)=>x)");
+		Expression b = new Expression("((x&y)=>x)");
+
+		assertTrue(a.getTree().equals(b.getTree()));
+		
+		a = new Expression("(((a|b)&~c)=>a)");
+		b = new Expression("(((a|b)&~c)=>a)");
+		
+		assertTrue(a.getTree().equals(b.getTree()));
+		
+		a = new Expression("((x&y)=>x)");
+		b = new Expression("(((a|b)&~c)=>a)");
+		
+		assertFalse(a.getTree().equals(b.getTree()));
+	}
 	
 }
