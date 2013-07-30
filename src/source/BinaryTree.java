@@ -24,9 +24,14 @@ public class BinaryTree<T> {
 		root = new Node<T> (in, left, right);
 	}
 	
-	public Iterator<Node<T>> iterator()
+	public Iterator<Node<T>> DFSiterator()
 	{
 		return new BinaryTreeDFSIterator<T>(root);
+	}
+	
+	public Iterator<Node<T>> BFSiterator()
+	{
+		return new BinaryTreeBFSIterator<T>(root);
 	}
 	
 	public void print() {
