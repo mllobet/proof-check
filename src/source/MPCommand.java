@@ -26,9 +26,11 @@ public class MPCommand extends Command
 		
 		// E1 and (E1=>E2) we can infer E2.
 		//Commands might have any direction, so we test both sides
-		if (commands.get(0).getInference().getTree().equals(commands.get(1).getInference().getTree().root.getLeft()) && getExpr().getTree().equals(commands.get(1).getInference().getTree().root.getRight()))
+		if (commands.get(0).getInference().getTree().equals(commands.get(1).getInference().getTree().root.getLeft()) 
+				&& getExpr().getTree().equals(commands.get(1).getInference().getTree().root.getRight()))
 			setInference(getExpr());
-		else if (commands.get(1).getInference().getTree().equals(commands.get(0).getInference().getTree().root.getLeft()) && getExpr().getTree().equals(commands.get(0).getInference().getTree().root.getRight()))
+		else if (commands.get(1).getInference().getTree().equals(commands.get(0).getInference().getTree().root.getLeft())
+				&& getExpr().getTree().equals(commands.get(0).getInference().getTree().root.getRight()))
 			setInference(getExpr());
 		else 
 			throw new IllegalInferenceException("Construction of MP is incorrect");

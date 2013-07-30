@@ -4,11 +4,59 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import source.Expression;
+import source.IllegalLineException;
+
 public class ExpressionTest {
 
 	@Test
-	public void testExpression() {
-		fail("Not yet implemented");
+	public void testExpression() throws IllegalLineException {
+		
+		try
+		{
+			Expression expr = new Expression("(a&b)");
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		try
+		{
+			Expression expr = new Expression("a&b");
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		try
+		{
+			Expression expr = new Expression("a)");
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		try
+		{
+			Expression expr = new Expression("((a&b)|~~~~b)");
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		
+		try
+		{
+			Expression expr = new Expression("()");
+		}
+		catch (Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+
 	}
 
 	@Test
