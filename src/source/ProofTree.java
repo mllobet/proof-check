@@ -249,7 +249,7 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 	
 	public boolean equals(ProofTree pt) {
 		if (pt != null) {
-			return equals (pt.root);
+			return equals((ProofNode)pt.root);
 		}
 		return false;
 	}
