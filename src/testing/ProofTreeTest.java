@@ -43,7 +43,7 @@ public class ProofTreeTest {
 		assertTrue(exp3.getTree().isEquivalent(proof3.getTree()));
 		assertFalse(exp4.getTree().isEquivalent(proof4.getTree()));
 		assertFalse(exp5.getTree().isEquivalent(proof5.getTree()));
-		assertFalse(exp6.getTree().isEquivalent(proof6.getTree()));
+		assertTrue(exp6.getTree().isEquivalent(proof6.getTree()));
 
 	}
 
