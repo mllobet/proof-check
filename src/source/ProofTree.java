@@ -225,8 +225,8 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 	{		
 		HashMap<String, Node<Token>> nodeHashMap = new HashMap<String, Node<Token>>();
 				
-		Iterator<Node<Token>> definitionIter = definitionTree.iterator();
-		for (Iterator<Node<Token>> iter = this.iterator(); iter.hasNext() && definitionIter.hasNext();)
+		Iterator<Node<Token>> definitionIter = definitionTree.BFSiterator();
+		for (Iterator<Node<Token>> iter = this.BFSiterator(); iter.hasNext() && definitionIter.hasNext();)
 		{
 			Node<Token> node = iter.next();
 			Node<Token> definitionNode = definitionIter.next();
