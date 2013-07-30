@@ -18,7 +18,9 @@ public class MTCommand extends Command
 	@Override
 	public void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException
 	{
-		//Account for null inference?
+		//Account for null inference
+		if(commands.get(0).getInference() == null | commands.get(1).getInference() == null)
+			throw new IllegalInferenceException("Trying to access lines out of scope");
 		//Check if there are two or no commands that are inferences
 		if (!(commands.get(0).getInference().isImplication() | commands.get(1).getInference().isImplication()))
 			throw new IllegalInferenceException("There is no command with an inference");

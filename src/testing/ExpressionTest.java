@@ -28,6 +28,18 @@ public class ExpressionTest {
 		try
 		{
 			exception = false;
+			Expression expr = new Expression("((a=>b)&b)");
+		}
+		catch (Exception e)
+		{
+			exception = true;
+		}
+		
+		assertFalse(exception);
+		
+		try
+		{
+			exception = false;
 			Expression expr = new Expression("((a&b)|~~~~b)");
 		}
 		catch (Exception e)
@@ -59,12 +71,46 @@ public class ExpressionTest {
 			exception = true;
 		}
 		
+		try
+		{
+			exception = false;
+			Expression expr = new Expression("(a&b&c)");
+		}
+		catch (Exception e)
+		{
+			exception = true;
+		}
+		
 		assertTrue(exception);
 
 		try
 		{
 			exception = false;
 			Expression expr = new Expression("()");
+		}
+		catch (Exception e)
+		{
+			exception = true;
+		}
+		
+		assertTrue(exception);
+		
+		try
+		{
+			exception = false;
+			Expression expr = new Expression("(1&2)");
+		}
+		catch (Exception e)
+		{
+			exception = true;
+		}
+		
+		assertTrue(exception);
+		
+		try
+		{
+			exception = false;
+			Expression expr = new Expression("");
 		}
 		catch (Exception e)
 		{
