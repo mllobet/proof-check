@@ -242,6 +242,11 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 					nodeHashMap.put(definitionNode.getData().getValue(), node);
 				}
 			}
+			else
+			{
+				if (definitionNode.getData().getType() != node.getData().getType())
+					return false;
+			}
 		}
 		
 		return true;

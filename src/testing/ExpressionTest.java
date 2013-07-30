@@ -12,50 +12,66 @@ public class ExpressionTest {
 	@Test
 	public void testExpression() throws IllegalLineException {
 		
+		boolean exception = false;
+		
 		try
 		{
 			Expression expr = new Expression("(a&b)");
 		}
 		catch (Exception e)
 		{
-			System.out.println(e.getMessage());
+			exception = true;
 		}
+		
+		assertFalse(exception);
 		
 		try
 		{
-			Expression expr = new Expression("a&b");
-		}
-		catch (Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
-		
-		try
-		{
-			Expression expr = new Expression("a)");
-		}
-		catch (Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
-		
-		try
-		{
+			exception = false;
 			Expression expr = new Expression("((a&b)|~~~~b)");
 		}
 		catch (Exception e)
 		{
-			System.out.println(e.getMessage());
+			exception = true;
 		}
 		
+		assertFalse(exception);
+
 		try
 		{
+			exception = false;
+			Expression expr = new Expression("a&b");
+		}
+		catch (Exception e)
+		{
+			exception = true;
+		}
+		
+		assertTrue(exception);
+
+		try
+		{
+			exception = false;
+			Expression expr = new Expression("a)");
+		}
+		catch (Exception e)
+		{
+			exception = true;
+		}
+		
+		assertTrue(exception);
+
+		try
+		{
+			exception = false;
 			Expression expr = new Expression("()");
 		}
 		catch (Exception e)
 		{
-			System.out.println(e.getMessage());
+			exception = true;
 		}
+		
+		assertTrue(exception);
 
 	}
 
