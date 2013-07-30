@@ -16,24 +16,20 @@ public class ICCommand extends Command
 	}
 
 	@Override
-	public void execute(List<Command> commands) throws IllegalLineException
+	public void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException
 	{
-		setInference(new Expression("(" + commands.get(0).getExpr().toString() + "=>" + getExpr().toString() + ")"));
+		if (commands.get(0).getInference().getTree().equals((ProofNode)(getExpr().getTree().root.getRight())))
+			setInference(getExpr());
+		else
+			throw new IllegalInferenceException("Inference is not correct");
 	}
-	
+
 	@Override
 	public boolean isOk()
 	{
 		return true;
 	}
 
-	@Override
-	public boolean isComplete()
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
 	@Override
 	public String toString()
 	{

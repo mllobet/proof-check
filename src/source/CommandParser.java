@@ -87,7 +87,7 @@ public class CommandParser
 		}
 		else
 		{
-			if (_currentCmd.isComplete() && _currentCmd.getParent() != null)
+			if (_currentCmd.isComplete() && _currentCmd.getParent().getLineNumber().number().size() != _currentCmd.getLineNumber().number().size())
 			{
 				_parent = _parent.getParent();
 				_currentCmd = _currentCmd.getParent(); // Unbranch
