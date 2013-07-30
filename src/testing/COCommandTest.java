@@ -45,9 +45,6 @@ public class COCommandTest {
 		catch (Exception e) {}
 		
 		assertFalse(exception);
-		System.out.println("Trees");
-		e.getTree().print();
-		co.getInference().getTree().print();
 		assertEquals(co.getInference(), e);
 	}
 	

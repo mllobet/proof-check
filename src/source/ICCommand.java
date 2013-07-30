@@ -18,6 +18,8 @@ public class ICCommand extends Command
 	@Override
 	public void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException
 	{
+		if(commands.get(0).getInference() == null)
+			throw new IllegalInferenceException("Reaching invalid scope");
 		if (commands.get(0).getInference().getTree().equals((ProofNode)(getExpr().getTree().root.getRight())))
 			setInference(getExpr());
 		else

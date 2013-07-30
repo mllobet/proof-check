@@ -18,7 +18,7 @@ public class COCommand extends Command
 	@Override
 	public void execute(List<Command> commands) throws IllegalInferenceException
 	{
-		if (commands.get(0).getExpr().getTree().equalsOpositeSign(commands.get(1).getExpr().getTree()))
+		if (commands.get(0).getInference().getTree().equalsOpositeSign(commands.get(1).getInference().getTree()))
 			setInference(getExpr());
 		else throw new IllegalInferenceException("Expression given does not match negate expr");
 

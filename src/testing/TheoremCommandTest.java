@@ -38,6 +38,7 @@ public class TheoremCommandTest {
 
 	@Test
 	public void testIncorrectTheorem() {
+		System.out.println("Testing incorrect");
 		try 
 		{
 			theoE = new Expression("(a=>b)");

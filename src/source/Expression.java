@@ -26,7 +26,7 @@ public class Expression
 			throw new IllegalLineException("Expression doesn't contain any known token");
 
 		_tree = ProofTree.buildTree(tokens);
-		_tree.print();
+		//_tree.print();
 
 	}
 

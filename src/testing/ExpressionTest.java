@@ -76,18 +76,8 @@ public class ExpressionTest {
 	}
 
 	@Test
-	public void testIsImplication() {
-		fail("Not yet implemented");
+	public void testIsImplication() throws IllegalLineException {
+		Expression expr = new Expression("(a=>b)");
+		assertTrue(expr.isImplication());
 	}
-
-	@Test
-	public void testGetTree() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testToString() {
-		fail("Not yet implemented");
-	}
-
 }

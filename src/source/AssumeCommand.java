@@ -29,9 +29,9 @@ public class AssumeCommand extends Command
 		// 1. Negated self
 		// 2. If parent show is an implication, left of show
 		if(getExpr() == null)
-			System.out.println("FUUUUU null expr");
+			System.out.println(" null expr");
 		if(getParent() == null)
-			System.out.println("FUUUUU null parent");
+			System.out.println(" null parent");
 			
 		if(getExpr().getTree().equalsOpositeSign(getParent().getExpr().getTree())) {
 			return true;
