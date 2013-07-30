@@ -248,8 +248,9 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 	}
 	
 	public boolean equals(ProofTree pt) {
+		System.out.println("ProofTreEquals");
 		if (pt != null) {
-			return equals((ProofNode)pt.root);
+			return equals ((ProofNode)(pt.root));
 		}
 		return false;
 	}

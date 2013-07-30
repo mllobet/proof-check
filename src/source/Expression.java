@@ -11,7 +11,7 @@ public class Expression
 	public Expression(String s) throws IllegalLineException
 	{
 		_string = s;
-		
+
 		ArrayList<Token> tokens = new ArrayList<Token>();
 		ExpressionParser parser = new ExpressionParser(s);
 		while (true)
@@ -24,7 +24,7 @@ public class Expression
 
 		if (tokens.size() == 0)
 			throw new IllegalLineException("Expression doesn't contain any known token");
-		
+
 		_tree = ProofTree.buildTree(tokens);
 		_tree.print();
 
@@ -39,11 +39,15 @@ public class Expression
 		return ((ProofNode)_tree.root).equals(new ProofNode(new Token(Token.Type.IMPLICATION_OPERATOR, "=>")));
 	}
 
+	public boolean equals(Object o) {
+		return this._tree.equals(((Expression)o).getTree());
+	}
+
 	public ProofTree getTree()
 	{
 		return _tree;
 	}
-	
+
 	public String toString()
 	{
 		return _string;
