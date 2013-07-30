@@ -5,11 +5,11 @@ import java.util.NoSuchElementException;
 import java.util.Stack;
 
 
-public class BinaryTreeIterator<T> implements Iterator<Node<T>> {
+public class BinaryTreeDFSIterator<T> implements Iterator<Node<T>> {
 
 	Node<T> next;
 	
-	BinaryTreeIterator(Node<T> root) {
+	BinaryTreeDFSIterator(Node<T> root) {
 		
 		next = root;
 		

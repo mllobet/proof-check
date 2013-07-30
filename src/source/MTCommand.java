@@ -16,9 +16,15 @@ public class MTCommand extends Command
 	}
 
 	@Override
-	public void execute(List<Command> commands) throws IllegalLineException
+	public void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException
 	{
+		//Account for null inference?
+		//Check if there are two or no commands that are inferences
+		if (!(commands.get(0).getInference().isImplication() | commands.get(1).getInference().isImplication()))
+			throw new IllegalInferenceException("There is no command with an inference");
+		
 		// ~E2 and (E1=>E2) we can infer ~E1
+		//Commands might have any direction, so we test both sides
 		if (commands.get(0).getInference().getTree().equalsOpositeSign((ProofNode)commands.get(1).getInference().getTree().root.getRight()) && getExpr().getTree().equalsOpositeSign((ProofNode)commands.get(1).getInference().getTree().root.getLeft())) {
 			if (debug) {
 				System.out.println(commands.get(0).getInference().getTree().equalsOpositeSign((ProofNode)commands.get(1).getInference().getTree().root.getRight()));
@@ -36,7 +42,7 @@ public class MTCommand extends Command
 			setInference(getExpr());
 		}
 		else 
-			throw new IllegalLineException("MT has invalid input");
+			throw new IllegalInferenceException("Construction of MT is incorrect");
 
 	}
 

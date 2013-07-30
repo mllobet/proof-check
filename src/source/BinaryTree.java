@@ -26,7 +26,7 @@ public class BinaryTree<T> {
 	
 	public Iterator<Node<T>> iterator()
 	{
-		return new BinaryTreeIterator<T>(root);
+		return new BinaryTreeDFSIterator<T>(root);
 	}
 	
 	public void print() {

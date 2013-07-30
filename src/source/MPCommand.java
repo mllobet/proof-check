@@ -17,15 +17,21 @@ public class MPCommand extends Command
 	}
 
 	@Override
-	public void execute(List<Command> commands) throws IllegalLineException
+	public void execute(List<Command> commands) throws IllegalLineException, IllegalInferenceException
 	{
+		//Account for null inferences
+		//Check if there are two or no commands that are inferences
+		if (!(commands.get(0).getInference().isImplication() | commands.get(1).getInference().isImplication()))
+			throw new IllegalInferenceException("There is no comand with an implication");
+		
 		// E1 and (E1=>E2) we can infer E2.
+		//Commands might have any direction, so we test both sides
 		if (commands.get(0).getInference().getTree().equals(commands.get(1).getInference().getTree().root.getLeft()) && getExpr().getTree().equals(commands.get(1).getInference().getTree().root.getRight()))
 			setInference(getExpr());
 		else if (commands.get(1).getInference().getTree().equals(commands.get(0).getInference().getTree().root.getLeft()) && getExpr().getTree().equals(commands.get(0).getInference().getTree().root.getRight()))
 			setInference(getExpr());
 		else 
-			throw new IllegalLineException("MP has invalid input");
+			throw new IllegalInferenceException("Construction of MP is incorrect");
 	}
 
 	@Override

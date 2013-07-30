@@ -6,8 +6,6 @@ import java.util.List;
 
 public class Proof {
 	private CommandParser _parser;
-	private TheoremSet theorems;
-	private ProofTree proofTree;
 	private Command lastCommand;
 	private LineNumber _nextLine;
 
@@ -15,7 +13,6 @@ public class Proof {
 
 	public Proof (TheoremSet theorems) {
 		_parser = new CommandParser(theorems);
-		this.theorems = theorems;
 
 		pastCommands = new LinkedList<Command>();
 	}
