@@ -32,11 +32,19 @@ public class ProofTreeTest {
 		Expression proof4 = new Expression("((x&y)=>x)");
 		Expression exp4 = new Expression("((a&b)=>b)");
 		
-		//assertTrue(exp1.getTree().isEquivalent(proof1.getTree()));
+		Expression proof5 = new Expression("(a&b)");
+		Expression exp5 = new Expression("(q=>v)");
+		
+		Expression proof6 = new Expression("(a=>b)");
+		Expression exp6 = new Expression("(q=>v)");
+		
+		assertTrue(exp1.getTree().isEquivalent(proof1.getTree()));
 		assertFalse(exp2.getTree().isEquivalent(proof2.getTree()));
 		assertTrue(exp3.getTree().isEquivalent(proof3.getTree()));
 		assertFalse(exp4.getTree().isEquivalent(proof4.getTree()));
-		
+		assertFalse(exp5.getTree().isEquivalent(proof5.getTree()));
+		assertTrue(exp6.getTree().isEquivalent(proof6.getTree()));
+
 	}
 
 	@Test
