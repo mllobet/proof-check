@@ -199,16 +199,16 @@ public class CommandParser
 		return new LineNumber(line);
 	}
 
-	private boolean isScopeAllowed(LineNumber cmd, LineNumber target)
+	public static boolean isScopeAllowed(LineNumber cmd, LineNumber target)
 	{
 		boolean isOk = true;
 		for (int i = 0; isOk && i < cmd.number().size() && i < target.number().size(); ++i)
 		{
 			int lhs = cmd.number().get(i);
 			int rhs = target.number().get(i);
-			if (rhs <= 0)
+			if (rhs <= 0 || rhs > lhs)
 				return false;
-			if (rhs > lhs)
+			if (rhs < lhs && i < target.number().size() - 1)
 				return false;
 		}
 		return true;
