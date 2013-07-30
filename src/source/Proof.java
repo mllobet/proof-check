@@ -32,14 +32,13 @@ public class Proof {
 		try
 		{
 			lastCommand.execute(getCommands(lastCommand.getArgs()));
-			_parser.updateLine(lastCommand, _nextLine);
 		}
 		catch (IllegalArgumentException e)
 		{
 			System.out.println(e.toString());
 			pastCommands.removeLast();
 			exception = true;
-		}
+		}		
 		if (!exception) 
 		{
 			//System.out.println("Checking out");
@@ -57,6 +56,7 @@ public class Proof {
 					lastCommand.complete();
 				}
 			}
+			_parser.updateLine(lastCommand, _nextLine);
 		}
 
 	}
@@ -77,6 +77,6 @@ public class Proof {
 		Command c = _parser.currentCommand();
 		if (c == null)
 			return false;
-		return _parser.currentCommand().isComplete() && _parser.currentCommand().getParent() == null;
+		return _parser.currentCommand().isComplete() && _parser.currentCommand().getLineNumber().number().size() == 1;
 	}
 }

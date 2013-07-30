@@ -19,9 +19,6 @@ public abstract class Command
 
 	public Command(LineNumber lineNumber, Expression expr, Command parent)
 	{
-		if (parent == null)
-			if (debug)
-				System.out.println("Parent is null!");
 		_lineNumber  = lineNumber;
 		_expr 		 = expr;
 		_inference	 = null;
