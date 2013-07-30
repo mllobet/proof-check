@@ -241,7 +241,7 @@ public class CommandParser
 				commands = commands.get(number).subcommands();
 		}
 		Integer number = nb.number().get(nb.number().size() - 1) - 1;
-		if (number >= commands.size() || number <= 0)
+		if (number >= commands.size() || number < 0)
 			throw new IllegalLineException("Line: `" + nb.toString() + "' doesn't exist");
 		return commands.get(number);
 	}
