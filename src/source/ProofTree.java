@@ -231,19 +231,32 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 			Node<Token> node = iter.next();
 			Node<Token> definitionNode = definitionIter.next();
 			
+	//		System.out.println("Definition Token = " + definitionNode.getData().getValue());
+	//		System.out.println("Token = " + node.getData().getValue());
+
+			
 			if (definitionNode.getData().getType() == Token.Type.VARIABLE)
 			{
 				if (nodeHashMap.containsKey(definitionNode.getData().getValue()))
 				{
+//					System.out.println("Contains Key" + definitionNode.getData().getValue());
 					Node<Token> containNode = nodeHashMap.get(definitionNode.getData().getValue());
 					if (containNode.equals(node) == false)
+					{
+					//	System.out.println("Contains Node" + containNode.getData().getValue() + "equals to " + node.getData().getValue());
 						return false;
+					}
 				}
 				else
 				{
+				//	System.out.println("Not Contains Key" + definitionNode.getData().getValue());
 					if (nodeHashMap.containsValue(node))
+					{
+				//		System.out.println("Contains Value" + node.getData().getValue());
 						return false;
+					}
 					
+				//	System.out.println("add Value" + node.getData().getValue() + "for Key " + definitionNode.getData().getValue());
 					nodeHashMap.put(definitionNode.getData().getValue(), node);
 				}
 			}
