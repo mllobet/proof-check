@@ -12,7 +12,7 @@ public class BinaryTreeBFSIterator<T> implements Iterator<Node<T>> {
 	
 	BinaryTreeBFSIterator(Node<T> root) {
 		_queue = new LinkedList<Node<T>>();
-		_queue.push(root);
+		_queue.add(root);
 			
 	}
 	
@@ -26,9 +26,9 @@ public class BinaryTreeBFSIterator<T> implements Iterator<Node<T>> {
 		
 		Node<T> ret = _queue.pop();
 		if (ret.getLeft() != null)
-			_queue.push(ret.getLeft());
+			_queue.add(ret.getLeft());
 		if (ret.getRight() != null)
-			_queue.push(ret.getRight());
+			_queue.add(ret.getRight());
 		
 		return ret;
 	}

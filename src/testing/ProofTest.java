@@ -4,10 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import source.Expression;
+import source.IllegalLineException;
+
 public class ProofTest {
 
 	@Test
-	public void test() {
+	public void test() throws IllegalLineException {
 		fail("Not yet implemented");
 	}
 	
@@ -23,5 +26,5 @@ public class ProofTest {
 	public void finishProofWithSubProof() {
 		
 	}
-
+	
 }

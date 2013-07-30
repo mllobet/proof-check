@@ -29,12 +29,7 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 	}
 	
 	private static boolean isValidExpression(Stack<Token.Type> expressionStack)
-	{
-//		for (Iterator<Token.Type> iter = expressionStack.iterator(); iter.hasNext();)
-//		{
-//			System.out.println(iter.next());
-//		}
-		
+	{		
 		if (expressionStack.size() != 3)
 			return false;
 		
@@ -230,7 +225,7 @@ public class ProofTree extends BinaryTree<Token> {	protected final boolean debug
 		{
 			Node<Token> node = iter.next();
 			Node<Token> definitionNode = definitionIter.next();
-			
+						
 			if (definitionNode.getData().getType() == Token.Type.VARIABLE)
 			{
 				if (nodeHashMap.containsKey(definitionNode.getData().getValue()))
